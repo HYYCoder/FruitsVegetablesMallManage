@@ -5,10 +5,10 @@ export async function query(): Promise<any> {
 }
 
 export async function queryCurrent(): Promise<any> {
-  return request(`/admin/${localStorage.getItem('loginId')}`, {
+  return request('/index', {
     method: 'GET',
     headers: {
-      Authorization: `${localStorage.getItem('token')}`,
+      Authorization: `${localStorage.getItem('token')}1`,
     },
   });
 }
