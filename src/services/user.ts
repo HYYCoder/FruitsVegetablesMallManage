@@ -8,7 +8,7 @@ export async function queryCurrent(): Promise<any> {
   return request('/index', {
     method: 'GET',
     headers: {
-      Authorization: `${localStorage.getItem('token')}1`,
+      Authorization: `${localStorage.getItem('token')}`,
     },
   });
 }
