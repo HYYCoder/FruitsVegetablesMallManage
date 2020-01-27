@@ -1,9 +1,13 @@
 import request from '@/utils/request';
 import { TableListParams } from './data.d';
 
-export async function queryRule(params?: TableListParams) {
+export async function queryRule(pageNums?: number, pageSizes?: number) {
   return request('/goods', {
-    params,
+    method: 'GET',
+    data: {
+      pageNum: pageNums,
+      pageSize: pageSizes,
+    },
   });
 }
 

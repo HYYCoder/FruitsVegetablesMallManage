@@ -113,7 +113,7 @@ export default {
               authority: ['admin'],
             },
             {
-              name: '查询表格',
+              name: 'goodsdetail',
               icon: 'smile',
               path: '/goodsdetailmanage',
               component: './GoodsDetailManage',

@@ -65,7 +65,7 @@ const handleRemove = async (selectedRows: TableListItem[]) => {
   if (!selectedRows) return true;
   try {
     await removeRule({
-      key: selectedRows.map(row => row.key),
+      key: selectedRows.map(row => row.id),
     });
     hide();
     message.success('删除成功，即将刷新');
@@ -134,10 +134,10 @@ const TableList: React.FC<TableListProps> = () => {
               setStepFormValues(record);
             }}
           >
-            配置
+            修改
           </a>
           <Divider type="vertical" />
-          <a href="">订阅警报</a>
+          <a href="">删除</a>
         </>
       ),
     },
@@ -146,7 +146,7 @@ const TableList: React.FC<TableListProps> = () => {
   return (
     <PageHeaderWrapper>
       <ProTable<TableListItem>
-        headerTitle="查询表格"
+        headerTitle="商品列表"
         actionRef={actionRef}
         rowKey="key"
         toolBarRender={(action, { selectedRows }) => [
@@ -179,12 +179,10 @@ const TableList: React.FC<TableListProps> = () => {
         tableAlertRender={(selectedRowKeys, selectedRows) => (
           <div>
             已选择 <a style={{ fontWeight: 600 }}>{selectedRowKeys.length}</a> 项&nbsp;&nbsp;
-            <span>
-              服务调用次数总计 {selectedRows.reduce((pre, item) => pre + item.callNo, 0)} 万
-            </span>
+            <span>服务调用次数总计 {selectedRows.reduce((pre, item) => pre + item.id, 0)} 万</span>
           </div>
         )}
-        request={() => queryRule()}
+        request={params => queryRule(params?.current, params?.pageSize)}
         columns={columns}
         rowSelection={{}}
       />

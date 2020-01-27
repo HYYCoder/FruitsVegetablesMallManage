@@ -36,7 +36,6 @@ export interface UserModelType {
   };
   reducers: {
     saveCurrentUser: Reducer<UserModelState>;
-    changeNotifyCount: Reducer<UserModelState>;
   };
 }
 
@@ -69,21 +68,6 @@ const UserModel: UserModelType = {
       return {
         ...state,
         currentUser: action.payload || {},
-      };
-    },
-    changeNotifyCount(
-      state = {
-        currentUser: {},
-      },
-      action,
-    ) {
-      return {
-        ...state,
-        currentUser: {
-          ...state.currentUser,
-          notifyCount: action.payload.totalCount,
-          unreadCount: action.payload.unreadCount,
-        },
       };
     },
   },
