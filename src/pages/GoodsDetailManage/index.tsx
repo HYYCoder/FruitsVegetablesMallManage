@@ -86,6 +86,7 @@ const TableList: React.FC<TableListProps> = () => {
     {
       title: '商品图片',
       dataIndex: 'imageUrls',
+      render: (val: string) => <img src={val} style={{ width: 60, height: 60 }} alt="" />,
     },
     {
       title: '类型',
@@ -94,7 +95,6 @@ const TableList: React.FC<TableListProps> = () => {
     {
       title: '商品名',
       dataIndex: 'name',
-      // sorter: true,
       // renderText: (val: string) => `${val} 万`,
     },
     {
@@ -117,10 +117,6 @@ const TableList: React.FC<TableListProps> = () => {
     {
       title: '打折减价',
       dataIndex: 'reducedPrice',
-    },
-    {
-      title: '细节描述',
-      dataIndex: 'detail',
     },
     {
       title: '操作',

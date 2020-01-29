@@ -4,6 +4,9 @@ import { TableListParams } from './data.d';
 export async function queryRule(pageNums?: number, pageSizes?: number) {
   return request('/manage/goods', {
     method: 'GET',
+    headers: {
+      Authorization: `${localStorage.getItem('token')}`,
+    },
     data: {
       pageNum: pageNums,
       pageSize: pageSizes,
@@ -11,12 +14,11 @@ export async function queryRule(pageNums?: number, pageSizes?: number) {
   });
 }
 
-export async function removeRule(params: { key: number[] }) {
-  return request('/api/rule', {
+export async function removeRule(params: number) {
+  return request(`/manage/delete/goods/${params}`, {
     method: 'POST',
-    data: {
-      ...params,
-      method: 'delete',
+    headers: {
+      Authorization: `${localStorage.getItem('token')}`,
     },
   });
 }
