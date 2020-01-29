@@ -1,7 +1,7 @@
 import { DownOutlined, PlusOutlined } from '@ant-design/icons';
 import { Form } from '@ant-design/compatible';
 import '@ant-design/compatible/assets/index.css';
-import { Button, Divider, Dropdown, Menu, message } from 'antd';
+import { Button, Divider, Dropdown, Menu, message, Popconfirm } from 'antd';
 import React, { useState, useRef } from 'react';
 import { FormComponentProps } from '@ant-design/compatible/es/form';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
@@ -21,8 +21,14 @@ const handleAdd = async () => {
   const hide = message.loading('正在添加');
   try {
     await addRule({
-      pageNum: 0,
-      pageSize: 10,
+      type: '1',
+      name: '1',
+      price: 1,
+      stock: 1,
+      reducedPrice: 1,
+      key: 1,
+      pageSize: 1,
+      current: 1,
     });
     hide();
     message.success('添加成功');
@@ -42,8 +48,14 @@ const handleUpdate = async () => {
   const hide = message.loading('正在配置');
   try {
     await updateRule({
-      pageNum: 0,
-      pageSize: 10,
+      type: '1',
+      name: '1',
+      price: 1,
+      stock: 1,
+      reducedPrice: 1,
+      key: 1,
+      pageSize: 1,
+      current: 1,
     });
     hide();
 
@@ -64,9 +76,7 @@ const handleRemove = async (selectedRows: TableListItem[]) => {
   const hide = message.loading('正在删除');
   if (!selectedRows) return true;
   try {
-    await removeRule({
-      key: selectedRows.map(row => row.id),
-    });
+    await selectedRows.map(row => removeRule(row.key));
     hide();
     message.success('删除成功，即将刷新');
     return true;
@@ -83,11 +93,6 @@ const TableList: React.FC<TableListProps> = () => {
   const [stepFormValues, setStepFormValues] = useState({});
   const actionRef = useRef<ActionType>();
   const columns: ProColumns<TableListItem>[] = [
-    {
-      title: '商品图片',
-      dataIndex: 'imageUrls',
-      render: (val: string) => <img src={val} style={{ width: 60, height: 60 }} alt="" />,
-    },
     {
       title: '类型',
       dataIndex: 'type',
@@ -120,7 +125,7 @@ const TableList: React.FC<TableListProps> = () => {
     },
     {
       title: '操作',
-      dataIndex: 'id',
+      dataIndex: 'key',
       valueType: 'option',
       render: (_, record) => (
         <>
@@ -133,7 +138,19 @@ const TableList: React.FC<TableListProps> = () => {
             修改
           </a>
           <Divider type="vertical" />
-          <a href="">删除</a>
+          <a>
+            <Popconfirm
+              title="是否确定要删除视频?"
+              onConfirm={() => {
+                removeRule(record.key);
+                window.location.reload();
+              }}
+              okText="确认"
+              cancelText="取消"
+            >
+              删除
+            </Popconfirm>
+          </a>
         </>
       ),
     },
@@ -175,10 +192,10 @@ const TableList: React.FC<TableListProps> = () => {
         tableAlertRender={(selectedRowKeys, selectedRows) => (
           <div>
             已选择 <a style={{ fontWeight: 600 }}>{selectedRowKeys.length}</a> 项&nbsp;&nbsp;
-            <span>服务调用次数总计 {selectedRows.reduce((pre, item) => pre + item.id, 0)} 万</span>
+            <span>服务调用次数总计 {selectedRows.reduce((pre, item) => pre + item.key, 0)} 万</span>
           </div>
         )}
-        request={params => queryRule(params?.current, params?.pageSize)}
+        request={params => queryRule(params)}
         columns={columns}
         rowSelection={{}}
       />

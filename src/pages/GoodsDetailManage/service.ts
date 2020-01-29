@@ -1,22 +1,27 @@
 import request from '@/utils/request';
 import { TableListParams } from './data.d';
 
-export async function queryRule(pageNums?: number, pageSizes?: number) {
-  return request('/manage/goods', {
-    method: 'GET',
-    headers: {
-      Authorization: `${localStorage.getItem('token')}`,
+export async function queryRule(params: TableListParams) {
+  return request(
+    `/manage/goods?type=${params.type !== undefined ? params.type : ''}&name=${
+      params.name !== undefined ? params.name : ''
+    }&price=${params.price !== undefined ? params.price : ''}&stock=${
+      params.stock !== undefined ? params.stock : ''
+    }&reducedPrice=${params.reducedPrice !== undefined ? params.reducedPrice : ''}&current=${
+      params.current
+    }&pageSize=${params.pageSize}`,
+    {
+      method: 'GET',
+      headers: {
+        Authorization: `${localStorage.getItem('token')}`,
+      },
     },
-    data: {
-      pageNum: pageNums,
-      pageSize: pageSizes,
-    },
-  });
+  );
 }
 
 export async function removeRule(params: number) {
   return request(`/manage/delete/goods/${params}`, {
-    method: 'POST',
+    method: 'DELETE',
     headers: {
       Authorization: `${localStorage.getItem('token')}`,
     },

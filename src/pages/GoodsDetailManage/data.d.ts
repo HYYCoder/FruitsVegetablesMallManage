@@ -1,5 +1,5 @@
 export interface TableListItem {
-  id: number;
+  key: number;
   imageUrls: string;
   type: string;
   name: string;
@@ -22,6 +22,12 @@ export interface TableListData {
 }
 
 export interface TableListParams {
-  pageNum: number;
-  pageSize: number;
+  type: string;
+  name: string;
+  price: number;
+  stock: number;
+  reducedPrice: number;
+  key: number;
+  pageSize?: number;
+  current?: number;
 }
