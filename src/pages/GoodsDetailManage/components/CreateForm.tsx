@@ -9,7 +9,16 @@ const FormItem = Form.Item;
 
 interface CreateFormProps extends FormComponentProps {
   modalVisible: boolean;
-  onSubmit: (fieldsValue: { desc: string }) => void;
+  onSubmit: (fieldsValue: {
+    imageUrls: string;
+    type: string;
+    name: string;
+    price: number;
+    stock: number;
+    specification: string;
+    reducedPrice: number;
+    detail: string;
+  }) => void;
   onCancel: () => void;
 }
 
@@ -25,14 +34,49 @@ const CreateForm: React.FC<CreateFormProps> = props => {
   return (
     <Modal
       destroyOnClose
-      title="新建规则"
+      title="新建商品"
       visible={modalVisible}
       onOk={okHandle}
       onCancel={() => onCancel()}
     >
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="商品图">
+        {form.getFieldDecorator('imageUrls', {
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！', min: 1 }],
+        })(<Input placeholder="请输入" />)}
+      </FormItem>
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="商品类型">
+        {form.getFieldDecorator('type', {
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！', min: 1 }],
+        })(<Input placeholder="请输入" />)}
+      </FormItem>
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="商品名">
+        {form.getFieldDecorator('name', {
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！', min: 1 }],
+        })(<Input placeholder="请输入" />)}
+      </FormItem>
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="价格">
+        {form.getFieldDecorator('price', {
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！', min: 1 }],
+        })(<Input placeholder="请输入" />)}
+      </FormItem>
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="库存">
+        {form.getFieldDecorator('stock', {
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！', min: 1 }],
+        })(<Input placeholder="请输入" />)}
+      </FormItem>
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="单位">
+        {form.getFieldDecorator('specification', {
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！', min: 1 }],
+        })(<Input placeholder="请输入" />)}
+      </FormItem>
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="打折减价">
+        {form.getFieldDecorator('reducedPrice', {
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！', min: 1 }],
+        })(<Input placeholder="请输入" />)}
+      </FormItem>
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="描述">
-        {form.getFieldDecorator('desc', {
-          rules: [{ required: true, message: '请输入至少五个字符的规则描述！', min: 5 }],
+        {form.getFieldDecorator('detail', {
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！', min: 1 }],
         })(<Input placeholder="请输入" />)}
       </FormItem>
     </Modal>

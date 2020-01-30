@@ -17,18 +17,27 @@ interface TableListProps extends FormComponentProps {}
  * 添加节点
  * @param fields
  */
-const handleAdd = async () => {
+const handleAdd = async (fields: {
+  imageUrls: string;
+  type: string;
+  name: string;
+  price: number;
+  stock: number;
+  specification: string;
+  reducedPrice: number;
+  detail: string;
+}) => {
   const hide = message.loading('正在添加');
   try {
     await addRule({
-      type: '1',
-      name: '1',
-      price: 1,
-      stock: 1,
-      reducedPrice: 1,
-      key: 1,
-      pageSize: 1,
-      current: 1,
+      imageUrls: fields.imageUrls,
+      type: fields.type,
+      name: fields.name,
+      price: fields.price,
+      stock: fields.stock,
+      specification: fields.specification,
+      reducedPrice: fields.reducedPrice,
+      detail: fields.detail,
     });
     hide();
     message.success('添加成功');
@@ -44,26 +53,39 @@ const handleAdd = async () => {
  * 更新节点
  * @param fields
  */
-const handleUpdate = async () => {
-  const hide = message.loading('正在配置');
+const handleUpdate = async (
+  ids: number,
+  fields: {
+    imageUrls: string;
+    type: string;
+    name: string;
+    price: number;
+    stock: number;
+    specification: string;
+    reducedPrice: number;
+    detail: string;
+  },
+) => {
+  const hide = message.loading('正在更新');
   try {
     await updateRule({
-      type: '1',
-      name: '1',
-      price: 1,
-      stock: 1,
-      reducedPrice: 1,
-      key: 1,
-      pageSize: 1,
-      current: 1,
+      id: ids,
+      imageUrls: fields.imageUrls,
+      type: fields.type,
+      name: fields.name,
+      price: fields.price,
+      stock: fields.stock,
+      specification: fields.specification,
+      reducedPrice: fields.reducedPrice,
+      detail: fields.detail,
     });
     hide();
 
-    message.success('配置成功');
+    message.success('更新成功');
     return true;
   } catch (error) {
     hide();
-    message.error('配置失败请重试！');
+    message.error('更新失败请重试！');
     return false;
   }
 };
@@ -76,7 +98,7 @@ const handleRemove = async (selectedRows: TableListItem[]) => {
   const hide = message.loading('正在删除');
   if (!selectedRows) return true;
   try {
-    await selectedRows.map(row => removeRule(row.key));
+    await selectedRows.map(row => removeRule(row.id));
     hide();
     message.success('删除成功，即将刷新');
     return true;
@@ -90,7 +112,7 @@ const handleRemove = async (selectedRows: TableListItem[]) => {
 const TableList: React.FC<TableListProps> = () => {
   const [createModalVisible, handleModalVisible] = useState<boolean>(false);
   const [updateModalVisible, handleUpdateModalVisible] = useState<boolean>(false);
-  const [stepFormValues, setStepFormValues] = useState({});
+  const [updateData, handleUpdateData] = useState();
   const actionRef = useRef<ActionType>();
   const columns: ProColumns<TableListItem>[] = [
     {
@@ -125,14 +147,14 @@ const TableList: React.FC<TableListProps> = () => {
     },
     {
       title: '操作',
-      dataIndex: 'key',
+      dataIndex: 'id',
       valueType: 'option',
       render: (_, record) => (
         <>
           <a
             onClick={() => {
               handleUpdateModalVisible(true);
-              setStepFormValues(record);
+              handleUpdateData(record);
             }}
           >
             修改
@@ -142,7 +164,7 @@ const TableList: React.FC<TableListProps> = () => {
             <Popconfirm
               title="是否确定要删除视频?"
               onConfirm={() => {
-                removeRule(record.key);
+                removeRule(record.id);
                 window.location.reload();
               }}
               okText="确认"
@@ -161,7 +183,7 @@ const TableList: React.FC<TableListProps> = () => {
       <ProTable<TableListItem>
         headerTitle="商品列表"
         actionRef={actionRef}
-        rowKey="key"
+        rowKey="id"
         toolBarRender={(action, { selectedRows }) => [
           <Button icon={<PlusOutlined />} type="primary" onClick={() => handleModalVisible(true)}>
             新建
@@ -192,7 +214,7 @@ const TableList: React.FC<TableListProps> = () => {
         tableAlertRender={(selectedRowKeys, selectedRows) => (
           <div>
             已选择 <a style={{ fontWeight: 600 }}>{selectedRowKeys.length}</a> 项&nbsp;&nbsp;
-            <span>服务调用次数总计 {selectedRows.reduce((pre, item) => pre + item.key, 0)} 万</span>
+            <span>总价 {selectedRows.reduce((pre, item) => pre + item.price, 0)} 万</span>
           </div>
         )}
         request={params => queryRule(params)}
@@ -200,8 +222,8 @@ const TableList: React.FC<TableListProps> = () => {
         rowSelection={{}}
       />
       <CreateForm
-        onSubmit={async () => {
-          const success = await handleAdd();
+        onSubmit={async fieldsValue => {
+          const success = await handleAdd(fieldsValue);
           if (success) {
             handleModalVisible(false);
             if (actionRef.current) {
@@ -212,26 +234,22 @@ const TableList: React.FC<TableListProps> = () => {
         onCancel={() => handleModalVisible(false)}
         modalVisible={createModalVisible}
       />
-      {stepFormValues && Object.keys(stepFormValues).length ? (
-        <UpdateForm
-          onSubmit={async () => {
-            const success = await handleUpdate();
-            if (success) {
-              handleModalVisible(false);
-              setStepFormValues({});
-              if (actionRef.current) {
-                actionRef.current.reload();
-              }
+      <UpdateForm
+        onSubmit={async (id, fieldsValue) => {
+          const success = await handleUpdate(id, fieldsValue);
+          if (success) {
+            handleModalVisible(false);
+            if (actionRef.current) {
+              actionRef.current.reload();
             }
-          }}
-          onCancel={() => {
-            handleUpdateModalVisible(false);
-            setStepFormValues({});
-          }}
-          updateModalVisible={updateModalVisible}
-          values={stepFormValues}
-        />
-      ) : null}
+          }
+        }}
+        onCancel={() => {
+          handleUpdateModalVisible(false);
+        }}
+        modalVisible={updateModalVisible}
+        updateData={updateData}
+      />
     </PageHeaderWrapper>
   );
 };

@@ -1,5 +1,5 @@
 import request from '@/utils/request';
-import { TableListParams } from './data.d';
+import { TableListParams, ChangeGoodsItem, TableListItem } from './data.d';
 
 export async function queryRule(params: TableListParams) {
   return request(
@@ -28,22 +28,41 @@ export async function removeRule(params: number) {
   });
 }
 
-export async function addRule(params: TableListParams) {
-  return request('/api/rule', {
+export async function addRule(params: ChangeGoodsItem) {
+  return request('/manage/add/goods', {
     method: 'POST',
+    headers: {
+      Authorization: `${localStorage.getItem('token')}`,
+    },
     data: {
-      ...params,
-      method: 'post',
+      imageUrls: params.imageUrls,
+      type: params.type,
+      name: params.name,
+      price: params.price,
+      stock: params.stock,
+      specification: params.specification,
+      reducedPrice: params.reducedPrice,
+      detail: params.detail,
     },
   });
 }
 
-export async function updateRule(params: TableListParams) {
-  return request('/api/rule', {
-    method: 'POST',
+export async function updateRule(params: TableListItem) {
+  return request('/manage/update/goods', {
+    method: 'PUT',
+    headers: {
+      Authorization: `${localStorage.getItem('token')}`,
+    },
     data: {
-      ...params,
-      method: 'update',
+      id: params.id,
+      imageUrls: params.imageUrls,
+      type: params.type,
+      name: params.name,
+      price: params.price,
+      stock: params.stock,
+      specification: params.specification,
+      reducedPrice: params.reducedPrice,
+      detail: params.detail,
     },
   });
 }
