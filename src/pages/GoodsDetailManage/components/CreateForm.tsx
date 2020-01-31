@@ -1,9 +1,9 @@
-import { Form } from '@ant-design/compatible';
+import { Form, Icon } from '@ant-design/compatible';
 import '@ant-design/compatible/assets/index.css';
-import { Input, Modal } from 'antd';
-
+import { Input, Modal, Upload, Row, Col } from 'antd';
 import { FormComponentProps } from '@ant-design/compatible/es/form';
 import React from 'react';
+import { formatMessage } from 'umi-plugin-react/locale';
 
 const FormItem = Form.Item;
 
@@ -41,8 +41,45 @@ const CreateForm: React.FC<CreateFormProps> = props => {
     >
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="商品图">
         {form.getFieldDecorator('imageUrls', {
-          rules: [{ required: true, message: '请输入至少1个字符的规则描述！', min: 1 }],
-        })(<Input placeholder="请输入" />)}
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
+        })(
+          <Col
+            span={8}
+            // style={{ padding: grid }}
+          >
+            <Upload showUploadList={false}>
+              <Row
+                style={{
+                  border: '1px dashed #ccc',
+                  width: '158px',
+                  height: '143px',
+                  backgroundColor: 'rgba(0, 0, 0, 0.02)',
+                }}
+                align="middle"
+              >
+                <Col span={24}>
+                  <Row justify="center" style={{ marginTop: 10 }}>
+                    <Icon
+                      key="plusType"
+                      type="plus"
+                      style={{ fontSize: 37, color: 'rgba(0, 0, 0, 0.45)' }}
+                    />
+                  </Row>
+                </Col>
+                <Col span={24}>
+                  <Row justify="center">
+                    {formatMessage({ id: 'GoodsDetailManage-CreateForm-upload-image' })}
+                  </Row>
+                </Col>
+              </Row>
+            </Upload>
+            <Col span={24}>
+              <span style={{ color: 'rgba(0, 0, 0, 0.45)', marginLeft: 30 }}>
+                {formatMessage({ id: 'GoodsDetailManage-CreateForm-upload-image-tip' })}
+              </span>
+            </Col>
+          </Col>,
+        )}
       </FormItem>
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="商品类型">
         {form.getFieldDecorator('type', {
