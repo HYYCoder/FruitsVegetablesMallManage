@@ -10,6 +10,11 @@ export interface TableListItem {
   detail: string;
 }
 
+export interface imageItem {
+  url: string;
+  file: File;
+}
+
 export interface ChangeGoodsItem {
   imageUrls: string;
   type: string;

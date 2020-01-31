@@ -112,11 +112,11 @@ const handleRemove = async (selectedRows: TableListItem[]) => {
   }
 };
 
-const TableList: React.FC<TableListProps> = prors => {
-  const { dispatch } = prors;
+const TableList: React.FC<TableListProps> = () => {
   const [createModalVisible, handleModalVisible] = useState<boolean>(false);
   const [updateModalVisible, handleUpdateModalVisible] = useState<boolean>(false);
   const [updateData, handleUpdateData] = useState();
+  const [imageListData, handleImageListData] = useState();
   const actionRef = useRef<ActionType>();
   const columns: ProColumns<TableListItem>[] = [
     {
@@ -158,6 +158,14 @@ const TableList: React.FC<TableListProps> = prors => {
           <a
             onClick={() => {
               handleUpdateModalVisible(true);
+              const newData = [{ url: '', file: new File([], '') }];
+              record.imageUrls.split(',').map(item => {
+                if (newData[0].url === '') {
+                  newData.splice(0, 1);
+                }
+                return newData.push({ url: item, file: new File([], '') });
+              });
+              handleImageListData(newData);
               handleUpdateData(record);
             }}
           >
@@ -237,7 +245,6 @@ const TableList: React.FC<TableListProps> = prors => {
         }}
         onCancel={() => handleModalVisible(false)}
         modalVisible={createModalVisible}
-        dispatch={dispatch}
       />
       <UpdateForm
         onSubmit={async (id, fieldsValue) => {
@@ -254,6 +261,10 @@ const TableList: React.FC<TableListProps> = prors => {
         }}
         modalVisible={updateModalVisible}
         updateData={updateData}
+        imageListData={imageListData}
+        imageChange={data => {
+          handleImageListData(data);
+        }}
       />
     </PageHeaderWrapper>
   );

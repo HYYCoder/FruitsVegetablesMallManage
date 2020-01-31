@@ -1,13 +1,13 @@
 import { Form, Icon } from '@ant-design/compatible';
 import '@ant-design/compatible/assets/index.css';
-import { Input, Modal, Upload, Row, Col, Popconfirm, message } from 'antd';
+import { Input, Modal, Upload, Row, Col } from 'antd';
 import { FormComponentProps } from '@ant-design/compatible/es/form';
 import React, { useState } from 'react';
 import { formatMessage } from 'umi-plugin-react/locale';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import styles from './form.less';
-import { Dispatch, Action } from 'redux';
+import { Dispatch, AnyAction } from 'redux';
 import { connect } from 'dva';
+import UploadImageList from './UploadImageList';
 
 const FormItem = Form.Item;
 
@@ -24,7 +24,7 @@ interface CreateFormProps extends FormComponentProps {
     detail: string;
   }) => void;
   onCancel: () => void;
-  dispatch: Dispatch<Action<'goods/upload'>>;
+  dispatch: Dispatch<AnyAction>;
 }
 
 const CreateForm: React.FC<CreateFormProps> = props => {
@@ -56,26 +56,20 @@ const CreateForm: React.FC<CreateFormProps> = props => {
     });
   };
 
-  // a little function to help us with reordering the result
   const reorder = (list: any, startIndex: any, endIndex: any) => {
     const result = list;
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
-
     return result;
   };
 
   const grid = 8;
 
   const getItemStyle = (isDragging: any, draggableStyle: any) => ({
-    // some basic styles to make the items look a bit nicer
     userSelect: 'none',
     padding: grid,
     margin: `0 ${grid}px 0 0`,
-    // change background colour if dragging
     background: isDragging ? 'lightgreen' : 'white',
-
-    // styles we need to apply on draggables
     ...draggableStyle,
   });
 
@@ -86,7 +80,6 @@ const CreateForm: React.FC<CreateFormProps> = props => {
   });
 
   const onDragEnd = (result: any) => {
-    // dropped outside the list
     if (!result.destination) {
       return;
     }
@@ -231,82 +224,5 @@ const CreateForm: React.FC<CreateFormProps> = props => {
     </Modal>
   );
 };
-
-function UploadImageList(props: any) {
-  const [showEditBtn, setShowEditBtn] = useState(false);
-  const [visible, setVisible] = useState(false);
-
-  function handleCancel() {
-    setVisible(false);
-  }
-
-  function confirm() {
-    props.itemDelete();
-    message.success(
-      `${formatMessage({ id: 'GoodsDetailManage.CreateForm.image.delete.success' })}`,
-    );
-  }
-
-  function downLoad() {
-    const tmpa = document.createElement('a');
-    tmpa.download = 'image';
-    tmpa.href = props.item.url;
-    tmpa.click();
-  }
-
-  return (
-    <div style={{ width: 158, height: 143, border: 'solid 1px #ececec' }}>
-      <img
-        src={props.item.url}
-        style={{ width: 158, height: 143, objectFit: 'cover' }}
-        onMouseEnter={() => setShowEditBtn(true)}
-        alt=""
-      />
-      {showEditBtn ? (
-        <div
-          className={styles.imgOpacityBackground}
-          onMouseEnter={() => setShowEditBtn(true)}
-          onMouseLeave={() => setShowEditBtn(false)}
-        >
-          <Icon
-            className={styles.imgLookBigPirture}
-            theme="filled"
-            type="eye"
-            onClick={() => setVisible(true)}
-          />
-          <Popconfirm
-            title={formatMessage({ id: 'GoodsDetailManage.CreateForm.image.download' })}
-            onConfirm={downLoad}
-            okText={formatMessage({ id: 'GoodsDetailManage.CreateForm.ok' })}
-            cancelText={formatMessage({ id: 'GoodsDetailManage.CreateForm.cancel' })}
-          >
-            <Icon className={styles.imgDownloadPirture} type="download" />
-          </Popconfirm>
-          <Popconfirm
-            title={formatMessage({ id: 'GoodsDetailManage.CreateForm.image.delete' })}
-            onConfirm={confirm}
-            okText={formatMessage({ id: 'GoodsDetailManage.CreateForm.ok' })}
-            cancelText={formatMessage({ id: 'GoodsDetailManage.CreateForm.cancel' })}
-          >
-            <Icon className={styles.imgDeleteImage} theme="filled" type="delete" />
-          </Popconfirm>
-        </div>
-      ) : null}
-      <Modal
-        width="550px"
-        closable={false}
-        visible={visible}
-        footer={false}
-        onCancel={handleCancel}
-      >
-        <Row>
-          <Col span={24}>
-            <img className={styles.imgModalImage} src={props.item.url} alt="" />
-          </Col>
-        </Row>
-      </Modal>
-    </div>
-  );
-}
 
 export default connect(() => ({}))(Form.create<CreateFormProps>()(CreateForm));
