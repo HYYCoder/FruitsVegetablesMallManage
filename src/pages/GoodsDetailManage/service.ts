@@ -1,7 +1,7 @@
 import request from '@/utils/request';
 import { TableListParams, ChangeGoodsItem, TableListItem } from './data.d';
 
-export async function queryRule(params: TableListParams) {
+export async function queryGoods(params: TableListParams) {
   return request(
     `/manage/goods?type=${params.type !== undefined ? params.type : ''}&name=${
       params.name !== undefined ? params.name : ''
@@ -19,7 +19,7 @@ export async function queryRule(params: TableListParams) {
   );
 }
 
-export async function removeRule(params: number) {
+export async function removeGoods(params: number) {
   return request(`/manage/delete/goods/${params}`, {
     method: 'DELETE',
     headers: {
@@ -28,7 +28,7 @@ export async function removeRule(params: number) {
   });
 }
 
-export async function addRule(params: ChangeGoodsItem) {
+export async function addGoods(params: ChangeGoodsItem) {
   return request('/manage/add/goods', {
     method: 'POST',
     headers: {
@@ -47,7 +47,19 @@ export async function addRule(params: ChangeGoodsItem) {
   });
 }
 
-export async function updateRule(params: TableListItem) {
+export async function uploadImage(params: File) {
+  const formData = new FormData();
+  formData.append('image', params);
+  return request('/manage/upload/image', {
+    method: 'POST',
+    headers: {
+      Authorization: `${localStorage.getItem('token')}`,
+    },
+    body: formData,
+  });
+}
+
+export async function updateGoods(params: TableListItem) {
   return request('/manage/update/goods', {
     method: 'PUT',
     headers: {

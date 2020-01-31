@@ -9,7 +9,7 @@ import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
 import CreateForm from './components/CreateForm';
 import UpdateForm from './components/UpdateForm';
 import { TableListItem } from './data.d';
-import { queryRule, updateRule, addRule, removeRule } from './service';
+import { queryGoods, updateGoods, addGoods, removeGoods } from './service';
 
 interface TableListProps extends FormComponentProps {}
 
@@ -29,7 +29,7 @@ const handleAdd = async (fields: {
 }) => {
   const hide = message.loading('正在添加');
   try {
-    await addRule({
+    await addGoods({
       imageUrls: fields.imageUrls,
       type: fields.type,
       name: fields.name,
@@ -68,7 +68,7 @@ const handleUpdate = async (
 ) => {
   const hide = message.loading('正在更新');
   try {
-    await updateRule({
+    await updateGoods({
       id: ids,
       imageUrls: fields.imageUrls,
       type: fields.type,
@@ -98,7 +98,7 @@ const handleRemove = async (selectedRows: TableListItem[]) => {
   const hide = message.loading('正在删除');
   if (!selectedRows) return true;
   try {
-    await selectedRows.map(row => removeRule(row.id));
+    await selectedRows.map(row => removeGoods(row.id));
     hide();
     message.success('删除成功，即将刷新');
     return true;
@@ -164,7 +164,7 @@ const TableList: React.FC<TableListProps> = () => {
             <Popconfirm
               title="是否确定要删除视频?"
               onConfirm={() => {
-                removeRule(record.id);
+                removeGoods(record.id);
                 window.location.reload();
               }}
               okText="确认"
@@ -217,7 +217,7 @@ const TableList: React.FC<TableListProps> = () => {
             <span>总价 {selectedRows.reduce((pre, item) => pre + item.price, 0)} 万</span>
           </div>
         )}
-        request={params => queryRule(params)}
+        request={params => queryGoods(params)}
         columns={columns}
         rowSelection={{}}
       />
