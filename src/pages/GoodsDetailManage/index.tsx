@@ -10,8 +10,11 @@ import CreateForm from './components/CreateForm';
 import UpdateForm from './components/UpdateForm';
 import { TableListItem } from './data.d';
 import { queryGoods, updateGoods, addGoods, removeGoods } from './service';
+import { Dispatch, AnyAction } from 'redux';
 
-interface TableListProps extends FormComponentProps {}
+interface TableListProps extends FormComponentProps {
+  dispatch: Dispatch<AnyAction>;
+}
 
 /**
  * 添加节点
@@ -109,7 +112,8 @@ const handleRemove = async (selectedRows: TableListItem[]) => {
   }
 };
 
-const TableList: React.FC<TableListProps> = () => {
+const TableList: React.FC<TableListProps> = prors => {
+  const { dispatch } = prors;
   const [createModalVisible, handleModalVisible] = useState<boolean>(false);
   const [updateModalVisible, handleUpdateModalVisible] = useState<boolean>(false);
   const [updateData, handleUpdateData] = useState();
@@ -233,6 +237,7 @@ const TableList: React.FC<TableListProps> = () => {
         }}
         onCancel={() => handleModalVisible(false)}
         modalVisible={createModalVisible}
+        dispatch={dispatch}
       />
       <UpdateForm
         onSubmit={async (id, fieldsValue) => {

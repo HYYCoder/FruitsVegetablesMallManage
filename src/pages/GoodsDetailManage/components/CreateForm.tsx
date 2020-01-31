@@ -6,7 +6,8 @@ import React, { useState } from 'react';
 import { formatMessage } from 'umi-plugin-react/locale';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import styles from './form.less';
-import { uploadImage } from '../service';
+import { Dispatch, Action } from 'redux';
+import { connect } from 'dva';
 
 const FormItem = Form.Item;
 
@@ -23,6 +24,7 @@ interface CreateFormProps extends FormComponentProps {
     detail: string;
   }) => void;
   onCancel: () => void;
+  dispatch: Dispatch<Action<'goods/upload'>>;
 }
 
 const CreateForm: React.FC<CreateFormProps> = props => {
@@ -31,18 +33,26 @@ const CreateForm: React.FC<CreateFormProps> = props => {
 
   const okHandle = () => {
     let newData = '';
-    imageListData.map(item => {
-      newData += uploadImage(item.file);
-
+    const { dispatch } = props;
+    imageListData.map((item, index) => {
+      dispatch({
+        type: 'goods/upload',
+        payload: item.file,
+        callback: (response: any) => {
+          newData += response;
+          if (index + 1 === imageListData.length) {
+            form.setFieldsValue({
+              imageUrls: newData,
+            });
+            form.validateFields((err, fieldsValue) => {
+              if (err) return;
+              form.resetFields();
+              handleAdd(fieldsValue);
+            });
+          }
+        },
+      });
       return null;
-    });
-    form.setFieldsValue({
-      imageUrls: newData,
-    });
-    form.validateFields((err, fieldsValue) => {
-      if (err) return;
-      form.resetFields();
-      handleAdd(fieldsValue);
     });
   };
 
@@ -299,4 +309,4 @@ function UploadImageList(props: any) {
   );
 }
 
-export default Form.create<CreateFormProps>()(CreateForm);
+export default connect(() => ({}))(Form.create<CreateFormProps>()(CreateForm));

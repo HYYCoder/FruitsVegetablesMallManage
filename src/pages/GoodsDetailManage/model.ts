@@ -1,12 +1,15 @@
-import { Reducer } from 'redux';
-import { Effect } from 'dva';
+import { AnyAction, Reducer } from 'redux';
+import { EffectsCommandMap } from 'dva';
 import { uploadImage } from './service';
 
 export interface StateType {
   status?: 'ok' | 'error';
-  type?: string;
-  currentAuthority?: 'user' | 'guest' | 'admin';
 }
+
+export type Effect = (
+  action: AnyAction,
+  effects: EffectsCommandMap & { select: <T>(func: (state: StateType) => T) => T },
+) => void;
 
 export interface ModelType {
   namespace: string;
