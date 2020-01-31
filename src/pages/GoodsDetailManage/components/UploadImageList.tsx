@@ -29,7 +29,12 @@ function UploadImageList(props: any) {
   return (
     <div style={{ width: 158, height: 143, border: 'solid 1px #ececec' }}>
       <img
-        src=""
+        src={
+          props.item.file.size !== 0
+            ? props.item.url
+            : require('D:/Scripts/Project/MyProject/FruitsVegetablesMallServer/target/classes/static/images/goods/' +
+                props.item.url)
+        }
         style={{ width: 158, height: 143, objectFit: 'cover' }}
         onMouseEnter={() => setShowEditBtn(true)}
         alt=""
@@ -73,7 +78,16 @@ function UploadImageList(props: any) {
       >
         <Row>
           <Col span={24}>
-            <img className={styles.imgModalImage} src="" alt="" />
+            <img
+              className={styles.imgModalImage}
+              src={
+                props.item.file.size !== 0
+                  ? props.item.url
+                  : require('D:/Scripts/Project/MyProject/FruitsVegetablesMallServer/target/classes/static/images/goods/' +
+                      props.item.url)
+              }
+              alt=""
+            />
           </Col>
         </Row>
       </Modal>
