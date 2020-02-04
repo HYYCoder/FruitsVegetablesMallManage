@@ -32,8 +32,8 @@ function UploadImageList(props: any) {
         src={
           props.item.file.size !== 0
             ? props.item.url
-            : require('D:/Scripts/Project/MyProject/FruitsVegetablesMallServer/target/classes/static/images/goods/' +
-                props.item.url)
+            : require(`${'D:/Scripts/Project/MyProject/FruitsVegetablesMallServer/target/classes/static/images/goods/' +
+                props.item.url}`)
         }
         style={{ width: 158, height: 143, objectFit: 'cover' }}
         onMouseEnter={() => setShowEditBtn(true)}
@@ -83,8 +83,8 @@ function UploadImageList(props: any) {
               src={
                 props.item.file.size !== 0
                   ? props.item.url
-                  : require('D:/Scripts/Project/MyProject/FruitsVegetablesMallServer/target/classes/static/images/goods/' +
-                      props.item.url)
+                  : require(`${'D:/Scripts/Project/MyProject/FruitsVegetablesMallServer/target/classes/static/images/goods/' +
+                      props.item.url}`)
               }
               alt=""
             />
