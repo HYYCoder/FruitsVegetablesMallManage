@@ -68,7 +68,7 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
           },
         });
       } else {
-        newData += ',';
+        newData += '&&';
         newData += item.url;
       }
       if (item.file.size === 0 && index + 1 === imageListData.length) {

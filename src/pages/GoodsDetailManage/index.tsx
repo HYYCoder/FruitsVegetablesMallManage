@@ -159,7 +159,7 @@ const TableList: React.FC<TableListProps> = () => {
             onClick={() => {
               handleUpdateModalVisible(true);
               const newData = [{ url: '', file: new File([], '') }];
-              record.imageUrls.split(',').map(item => {
+              record.imageUrls.split('&&').map(item => {
                 if (newData[0].url === '') {
                   newData.splice(0, 1);
                 }
