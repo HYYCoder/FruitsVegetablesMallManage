@@ -3,7 +3,7 @@ import styles from './UploadImageList.less';
 import { Modal, Row, Col, Popconfirm, message } from 'antd';
 import { formatMessage } from 'umi-plugin-react/locale';
 import { Icon } from '@ant-design/compatible';
-import { imageURL } from '../../../../jest.config';
+import { imageURL } from '../../../jest.config';
 
 function UploadImageList(props: any) {
   const [showEditBtn, setShowEditBtn] = useState(false);
@@ -33,11 +33,13 @@ function UploadImageList(props: any) {
         <img
           style={{ width: 158, height: 143, objectFit: 'cover' }}
           src={props.item.url}
+          onMouseEnter={() => setShowEditBtn(true)}
           alt=""
         />:
         <img
           style={{ width: 158, height: 143, objectFit: 'cover' }}
           src={imageURL+props.item.url}
+          onMouseEnter={() => setShowEditBtn(true)}
           alt=""
         />
       }

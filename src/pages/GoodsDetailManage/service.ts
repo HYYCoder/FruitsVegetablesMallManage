@@ -1,5 +1,5 @@
 import request from '@/utils/request';
-import { TableListParams, ChangeGoodsItem, TableListItem } from './data.d';
+import { TableListParams, ChangeItem, TableListItem } from './data.d';
 
 export async function queryGoods(params: TableListParams) {
   return request(
@@ -28,7 +28,7 @@ export async function removeGoods(params: number) {
   });
 }
 
-export async function addGoods(params: ChangeGoodsItem) {
+export async function addGoods(params: ChangeItem) {
   return request('/manage/add/goods', {
     method: 'POST',
     headers: {
@@ -44,18 +44,6 @@ export async function addGoods(params: ChangeGoodsItem) {
       reducedPrice: params.reducedPrice,
       detail: params.detail,
     },
-  });
-}
-
-export async function uploadImage(params: File) {
-  const formData = new FormData();
-  formData.append('image', params);
-  return request('/manage/upload/image', {
-    method: 'POST',
-    headers: {
-      Authorization: `${localStorage.getItem('token')}`,
-    },
-    body: formData,
   });
 }
 

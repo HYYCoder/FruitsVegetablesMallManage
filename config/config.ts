@@ -113,6 +113,12 @@ export default {
               authority: ['admin'],
             },
             {
+              name: 'bannerlist',
+              icon: 'smile',
+              path: '/bannerlistmanage',
+              component: './BannerListManage',
+            },
+            {
               name: 'goodsdetail',
               icon: 'smile',
               path: '/goodsdetailmanage',
@@ -152,7 +158,7 @@ export default {
         resourcePath: string;
       },
       _: string,
-      localName: string,
+      localName: string
     ) => {
       if (
         context.resourcePath.includes('node_modules') ||

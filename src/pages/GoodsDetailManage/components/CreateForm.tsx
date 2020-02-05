@@ -1,13 +1,13 @@
 import { Form, Icon } from '@ant-design/compatible';
 import '@ant-design/compatible/assets/index.css';
 import { Input, Modal, Upload, Row, Col } from 'antd';
-import { FormComponentProps } from '@ant-design/compatible/es/form';
 import React, { useState } from 'react';
+import { FormComponentProps } from '@ant-design/compatible/es/form';
 import { formatMessage } from 'umi-plugin-react/locale';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { Dispatch, AnyAction } from 'redux';
 import { connect } from 'dva';
-import UploadImageList from './UploadImageList';
+import UploadImageList from '../../../components/UploadImage/UploadImageList';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 const FormItem = Form.Item;
 
@@ -141,7 +141,6 @@ const CreateForm: React.FC<CreateFormProps> = props => {
                     <Upload
                       showUploadList={false}
                       beforeUpload={(files: File) => {
-                        // setfiles(file);
                         const imageList = imageListData || [];
                         if (imageList[0] !== undefined && imageList[0].url === '') {
                           imageList.splice(0, 1);

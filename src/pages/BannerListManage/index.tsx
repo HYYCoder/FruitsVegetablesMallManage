@@ -9,7 +9,7 @@ import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
 import CreateForm from './components/CreateForm';
 import UpdateForm from './components/UpdateForm';
 import { TableListItem } from './data.d';
-import { queryGoods, updateGoods, addGoods, removeGoods } from './service';
+import { queryBanner, updateBanner, addBanner, removeBanner } from './service';
 import { Dispatch, AnyAction } from 'redux';
 
 interface TableListProps extends FormComponentProps {
@@ -21,26 +21,12 @@ interface TableListProps extends FormComponentProps {
  * @param fields
  */
 const handleAdd = async (fields: {
-  imageUrls: string;
-  type: string;
-  name: string;
-  price: number;
-  stock: number;
-  specification: string;
-  reducedPrice: number;
-  detail: string;
+  imageUrl: string;
 }) => {
   const hide = message.loading('正在添加');
   try {
-    await addGoods({
-      imageUrls: fields.imageUrls,
-      type: fields.type,
-      name: fields.name,
-      price: fields.price,
-      stock: fields.stock,
-      specification: fields.specification,
-      reducedPrice: fields.reducedPrice,
-      detail: fields.detail,
+    await addBanner({
+      imageUrl: fields.imageUrl,
     });
     hide();
     message.success('添加成功');
@@ -56,39 +42,23 @@ const handleAdd = async (fields: {
  * 更新节点
  * @param fields
  */
-const handleUpdate = async (
-  ids: number,
+const handleUpdate = async (ids: number,
   fields: {
-    imageUrls: string;
-    type: string;
-    name: string;
-    price: number;
-    stock: number;
-    specification: string;
-    reducedPrice: number;
-    detail: string;
-  },
-) => {
-  const hide = message.loading('正在更新');
+    imageUrl: string;
+  },) => {
+  const hide = message.loading('正在配置');
   try {
-    await updateGoods({
+    await updateBanner({
       id: ids,
-      imageUrls: fields.imageUrls,
-      type: fields.type,
-      name: fields.name,
-      price: fields.price,
-      stock: fields.stock,
-      specification: fields.specification,
-      reducedPrice: fields.reducedPrice,
-      detail: fields.detail,
+      imageUrl: fields.imageUrl,
     });
     hide();
 
-    message.success('更新成功');
+    message.success('配置成功');
     return true;
   } catch (error) {
     hide();
-    message.error('更新失败请重试！');
+    message.error('配置失败请重试！');
     return false;
   }
 };
@@ -101,7 +71,7 @@ const handleRemove = async (selectedRows: TableListItem[]) => {
   const hide = message.loading('正在删除');
   if (!selectedRows) return true;
   try {
-    await selectedRows.map(row => removeGoods(row.id));
+    await selectedRows.map(row => removeBanner(row.id));
     hide();
     message.success('删除成功，即将刷新');
     return true;
@@ -120,34 +90,12 @@ const TableList: React.FC<TableListProps> = () => {
   const actionRef = useRef<ActionType>();
   const columns: ProColumns<TableListItem>[] = [
     {
-      title: '类型',
-      dataIndex: 'type',
-    },
-    {
-      title: '商品名',
+      title: 'id',
       dataIndex: 'name',
-      // renderText: (val: string) => `${val} 万`,
     },
     {
-      title: '价格',
-      dataIndex: 'price',
-      sorter: true,
-      // valueEnum: {
-      //   0: { text: '关闭', status: 'Default' },
-      //   1: { text: '运行中', status: 'Processing' },
-      //   2: { text: '已上线', status: 'Success' },
-      //   3: { text: '异常', status: 'Error' },
-      // },
-    },
-    {
-      title: '库存',
-      dataIndex: 'stock',
-      sorter: true,
-      // valueType: 'dateTime',
-    },
-    {
-      title: '打折减价',
-      dataIndex: 'reducedPrice',
+      title: '图片',
+      dataIndex: 'imageUrl',
     },
     {
       title: '操作',
@@ -159,12 +107,7 @@ const TableList: React.FC<TableListProps> = () => {
             onClick={() => {
               handleUpdateModalVisible(true);
               const newData = [{ url: '', file: new File([], '') }];
-              record.imageUrls.split('&&').map(item => {
-                if (newData[0].url === '') {
-                  newData.splice(0, 1);
-                }
-                return newData.push({ url: item, file: new File([], '') });
-              });
+              newData.push({ url: record.imageUrl, file: new File([], '') });
               handleImageListData(newData);
               handleUpdateData(record);
             }}
@@ -174,9 +117,9 @@ const TableList: React.FC<TableListProps> = () => {
           <Divider type="vertical" />
           <a>
             <Popconfirm
-              title="是否确定要删除商品?"
+              title="是否确定要删除轮播图?"
               onConfirm={() => {
-                removeGoods(record.id);
+                removeBanner(record.id);
                 window.location.reload();
               }}
               okText="确认"
@@ -193,9 +136,9 @@ const TableList: React.FC<TableListProps> = () => {
   return (
     <PageHeaderWrapper>
       <ProTable<TableListItem>
-        headerTitle="商品列表"
+        headerTitle="轮播图列表"
         actionRef={actionRef}
-        rowKey="id"
+        rowKey="key"
         toolBarRender={(action, { selectedRows }) => [
           <Button icon={<PlusOutlined />} type="primary" onClick={() => handleModalVisible(true)}>
             新建
@@ -225,10 +168,12 @@ const TableList: React.FC<TableListProps> = () => {
         tableAlertRender={(selectedRowKeys, selectedRows) => (
           <div>
             已选择 <a style={{ fontWeight: 600 }}>{selectedRowKeys.length}</a> 项&nbsp;&nbsp;
-            <span>总价 {selectedRows.reduce((pre, item) => pre + item.price, 0)} 万</span>
+            <span>
+              服务调用次数总计 {selectedRows.reduce((pre, item) => pre + item.id, 0)} 万
+            </span>
           </div>
         )}
-        request={params => queryGoods(params)}
+        request={params => queryBanner(params)}
         columns={columns}
         rowSelection={{}}
       />
@@ -245,26 +190,26 @@ const TableList: React.FC<TableListProps> = () => {
         onCancel={() => handleModalVisible(false)}
         modalVisible={createModalVisible}
       />
-      <UpdateForm
-        onSubmit={async (id, value) => {
-          const success = await handleUpdate(id, value);
-          if (success) {
-            handleModalVisible(false);
-            if (actionRef.current) {
-              actionRef.current.reload();
+        <UpdateForm
+          onSubmit={async (id, value) => {
+            const success = await handleUpdate(id, value);
+            if (success) {
+              handleModalVisible(false);
+              if (actionRef.current) {
+                actionRef.current.reload();
+              }
             }
-          }
-        }}
-        onCancel={() => {
-          handleUpdateModalVisible(false);
-        }}
-        updateModalVisible={updateModalVisible}
-        updateData={updateData}
-        imageListData={imageListData}
-        setImageListData={data => {
-          handleImageListData(data);
-        }}
-      />
+          }}
+          onCancel={() => {
+            handleUpdateModalVisible(false);
+          }}
+          updateModalVisible={updateModalVisible}
+          updateData={updateData}
+          imageListData={imageListData}
+          setImageListData={data => {
+            handleImageListData(data);
+          }}
+        />
     </PageHeaderWrapper>
   );
 };

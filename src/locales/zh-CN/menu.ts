@@ -48,5 +48,6 @@ export default {
   'menu.editor.flow': '流程编辑器',
   'menu.editor.mind': '脑图编辑器',
   'menu.editor.koni': '拓扑编辑器',
-  'menu.goodsdetail': '商品列表',
+  'menu.goodsdetail': '商品管理',
+  'menu.bannerlist': '轮播图管理',
 };

@@ -1,19 +1,19 @@
 import { Form, Icon } from '@ant-design/compatible';
 import '@ant-design/compatible/assets/index.css';
 import { Input, Modal, Upload, Row, Col } from 'antd';
-import { TableListItem, imageItem } from '../data.d';
-import { FormComponentProps } from '@ant-design/compatible/es/form';
 import React from 'react';
+import { FormComponentProps } from '@ant-design/compatible/es/form';
 import { formatMessage } from 'umi-plugin-react/locale';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { Dispatch, AnyAction } from 'redux';
 import { connect } from 'dva';
-import UploadImageList from './UploadImageList';
+import { TableListItem, imageItem } from '../data.d';
+import UploadImageList from '../../../components/UploadImage/UploadImageList';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 const FormItem = Form.Item;
 
 interface UpdateFormProps extends FormComponentProps {
-  modalVisible: boolean;
+  updateModalVisible: boolean;
   onSubmit: (
     id: number,
     fieldsValue: {
@@ -30,19 +30,19 @@ interface UpdateFormProps extends FormComponentProps {
   onCancel: () => void;
   updateData: TableListItem;
   imageListData: imageItem[];
-  imageChange: (data: imageItem[]) => void;
+  setImageListData: (data: imageItem[]) => void;
   dispatch: Dispatch<AnyAction>;
 }
 
 const UpdateForm: React.FC<UpdateFormProps> = props => {
   const {
-    modalVisible,
+    updateModalVisible,
     form,
     onSubmit: handleUpdate,
     onCancel,
     updateData,
     imageListData,
-    imageChange,
+    setImageListData,
   } = props;
 
   const okHandle = () => {
@@ -114,18 +114,18 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
       return;
     }
     const imageListDatas = reorder(imageListData, result.source.index, result.destination.index);
-    imageChange(imageListDatas);
+    setImageListData(imageListDatas);
   };
 
   return (
     <Modal
       destroyOnClose
-      title="新建商品"
-      visible={modalVisible}
+      title="修改商品"
+      visible={updateModalVisible}
       onOk={okHandle}
       onCancel={() => {
         onCancel();
-        imageChange([{ url: '', file: new File([], '') }]);
+        setImageListData([{ url: '', file: new File([], '') }]);
       }}
       width={600}
     >
@@ -158,7 +158,7 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
                                   itemDelete={() => {
                                     const newData = imageListData || [];
                                     newData.splice(index, 1);
-                                    imageChange(newData);
+                                    setImageListData(newData);
                                   }}
                                 />
                               </div>
@@ -179,7 +179,7 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
                           imageList.splice(0, 1);
                         }
                         imageList.push({ url: URL.createObjectURL(files), file: files });
-                        imageChange(imageList);
+                        setImageListData(imageList);
                         return false;
                       }}
                     >

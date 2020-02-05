@@ -15,7 +15,7 @@ export interface imageItem {
   file: File;
 }
 
-export interface ChangeGoodsItem {
+export interface ChangeItem {
   imageUrls: string;
   type: string;
   name: string;

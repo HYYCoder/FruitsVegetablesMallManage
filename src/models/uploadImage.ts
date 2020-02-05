@@ -1,6 +1,6 @@
 import { AnyAction, Reducer } from 'redux';
 import { EffectsCommandMap } from 'dva';
-import { uploadImage } from './service';
+import { uploadImage } from '../services/uploadImage';
 
 export interface StateType {
   status?: 'ok' | 'error';
