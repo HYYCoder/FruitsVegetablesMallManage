@@ -1,6 +1,7 @@
 module.exports = {
   testURL: 'http://localhost:8000',
-  apiUrl: 'http://localhost:8080',
+  apiURL: 'http://localhost:8080',
+  imageURL: 'http://localhost:8080/images/',
   preset: 'jest-puppeteer',
   extraSetupFiles: ['./tests/setupTests.js'],
   globals: {
