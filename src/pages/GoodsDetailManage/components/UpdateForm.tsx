@@ -54,6 +54,7 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
           type: 'goods/upload',
           payload: item.file,
           callback: (response: any) => {
+            newData += '&&';
             newData += response;
             if (index + 1 === imageListData.length) {
               form.setFieldsValue({
