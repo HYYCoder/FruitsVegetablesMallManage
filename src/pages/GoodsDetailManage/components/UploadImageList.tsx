@@ -28,17 +28,18 @@ function UploadImageList(props: any) {
 
   return (
     <div style={{ width: 158, height: 143, border: 'solid 1px #ececec' }}>
-      <img
-        src={
-          props.item.file.size !== 0
-            ? props.item.url
-            : require(`${'D:/Scripts/Project/MyProject/FruitsVegetablesMallServer/target/classes/static/images/goods/' +
-                props.item.url}`)
-        }
-        style={{ width: 158, height: 143, objectFit: 'cover' }}
-        onMouseEnter={() => setShowEditBtn(true)}
-        alt=""
-      />
+      {props.item.file.size !== 0?
+        <img
+          style={{ width: 158, height: 143, objectFit: 'cover' }}
+          src={props.item.url}
+          alt=""
+        />:
+        <img
+          style={{ width: 158, height: 143, objectFit: 'cover' }}
+          src={require('D:/Scripts/Project/MyProject/FruitsVegetablesMallServer/target/classes/static/images/goods/'+props.item.url)}
+          alt=""
+        />
+      }
       {showEditBtn ? (
         <div
           className={styles.imgOpacityBackground}
@@ -78,16 +79,18 @@ function UploadImageList(props: any) {
       >
         <Row>
           <Col span={24}>
-            <img
-              className={styles.imgModalImage}
-              src={
-                props.item.file.size !== 0
-                  ? props.item.url
-                  : require(`${'D:/Scripts/Project/MyProject/FruitsVegetablesMallServer/target/classes/static/images/goods/' +
-                      props.item.url}`)
-              }
-              alt=""
-            />
+            {props.item.file.size !== 0? 
+              <img
+                className={styles.imgModalImage}
+                src={props.item.url}
+                alt=""
+              />:
+              <img
+                className={styles.imgModalImage}
+                src={require('D:/Scripts/Project/MyProject/FruitsVegetablesMallServer/target/classes/static/images/goods/'+props.item.url)}
+                alt=""
+              />
+            }
           </Col>
         </Row>
       </Modal>
