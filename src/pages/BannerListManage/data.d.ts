@@ -1,6 +1,8 @@
 export interface TableListItem {
   id: number;
   imageUrl: string;
+  orders: number;
+  detail: string;
 }
 
 export interface imageItem {
@@ -10,6 +12,8 @@ export interface imageItem {
 
 export interface ChangeItem {
   imageUrl: string;
+  orders: number;
+  detail: string;
 }
 
 export interface TableListParams {

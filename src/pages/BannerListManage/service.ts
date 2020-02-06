@@ -26,7 +26,9 @@ export async function addBanner(params: ChangeItem) {
       Authorization: `${localStorage.getItem('token')}`,
     },
     data: {
+      orders: params.orders,
       imageUrl: params.imageUrl,
+      detail: params.detail,
     },
   });
 }
@@ -39,7 +41,9 @@ export async function updateBanner(params: TableListItem) {
     },
     data: {
       id: params.id,
-      imageUrls: params.imageUrl,
+      orders: params.orders,
+      imageUrl: params.imageUrl,
+      detail: params.detail,
     },
   });
 }

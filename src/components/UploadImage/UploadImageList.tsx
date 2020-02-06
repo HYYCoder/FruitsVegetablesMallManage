@@ -29,7 +29,7 @@ function UploadImageList(props: any) {
 
   return (
     <div style={{ width: 158, height: 143, border: 'solid 1px #ececec' }}>
-      {props.item.file.size !== 0?
+      {props.item.file !== undefined&&props.item.file.size !== 0?
         <img
           style={{ width: 158, height: 143, objectFit: 'cover' }}
           src={props.item.url}
@@ -82,7 +82,7 @@ function UploadImageList(props: any) {
       >
         <Row>
           <Col span={24}>
-            {props.item.file.size !== 0? 
+            {props.item.file !== undefined&&props.item.file.size !== 0? 
               <img
                 className={styles.imgModalImage}
                 src={props.item.url}

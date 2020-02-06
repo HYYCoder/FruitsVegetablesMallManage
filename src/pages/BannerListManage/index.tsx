@@ -21,12 +21,16 @@ interface TableListProps extends FormComponentProps {
  * @param fields
  */
 const handleAdd = async (fields: {
+  orders: number;
   imageUrl: string;
+  detail: string;
 }) => {
   const hide = message.loading('正在添加');
   try {
     await addBanner({
+      orders: fields.orders,
       imageUrl: fields.imageUrl,
+      detail: fields.detail,
     });
     hide();
     message.success('添加成功');
@@ -44,13 +48,17 @@ const handleAdd = async (fields: {
  */
 const handleUpdate = async (ids: number,
   fields: {
+    orders: number;
     imageUrl: string;
+    detail: string;
   },) => {
   const hide = message.loading('正在配置');
   try {
     await updateBanner({
       id: ids,
+      orders: fields.orders,
       imageUrl: fields.imageUrl,
+      detail: fields.detail,
     });
     hide();
 
@@ -90,12 +98,16 @@ const TableList: React.FC<TableListProps> = () => {
   const actionRef = useRef<ActionType>();
   const columns: ProColumns<TableListItem>[] = [
     {
-      title: 'id',
-      dataIndex: 'name',
+      title: '优先级',
+      dataIndex: 'orders',
     },
     {
       title: '图片',
       dataIndex: 'imageUrl',
+    },
+    {
+      title: '描述',
+      dataIndex: 'detail',
     },
     {
       title: '操作',
@@ -138,7 +150,7 @@ const TableList: React.FC<TableListProps> = () => {
       <ProTable<TableListItem>
         headerTitle="轮播图列表"
         actionRef={actionRef}
-        rowKey="key"
+        rowKey="id"
         toolBarRender={(action, { selectedRows }) => [
           <Button icon={<PlusOutlined />} type="primary" onClick={() => handleModalVisible(true)}>
             新建

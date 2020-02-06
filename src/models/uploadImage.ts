@@ -23,7 +23,7 @@ export interface ModelType {
 }
 
 const Model: ModelType = {
-  namespace: 'goods',
+  namespace: 'image',
 
   state: {
     status: undefined,

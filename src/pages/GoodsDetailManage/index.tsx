@@ -120,7 +120,7 @@ const TableList: React.FC<TableListProps> = () => {
   const actionRef = useRef<ActionType>();
   const columns: ProColumns<TableListItem>[] = [
     {
-      title: '类型',
+      title: '商品类型',
       dataIndex: 'type',
     },
     {

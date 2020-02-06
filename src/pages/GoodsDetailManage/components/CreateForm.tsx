@@ -29,16 +29,17 @@ interface CreateFormProps extends FormComponentProps {
 
 const CreateForm: React.FC<CreateFormProps> = props => {
   const { modalVisible, form, onSubmit: handleAdd, onCancel } = props;
-  const [imageListData, setImageListData] = useState([{ url: '', file: new File([], '') }]);
+  const [imageListData, setImageListData] = useState([{ url: '', file: new File([], '')}]);
 
   const okHandle = () => {
     let newData = '';
     const { dispatch } = props;
     imageListData.map((item, index) => {
       dispatch({
-        type: 'goods/upload',
+        type: 'image/upload',
         payload: item.file,
         callback: (response: any) => {
+          newData +="&&"
           newData += response;
           if (index + 1 === imageListData.length) {
             form.setFieldsValue({
@@ -83,7 +84,7 @@ const CreateForm: React.FC<CreateFormProps> = props => {
     if (!result.destination) {
       return;
     }
-    let imageListDatas = [{ url: '', file: new File([], '') }];
+    let imageListDatas = [{ url: '', file: new File([], '')}];
     imageListDatas = reorder(imageListData, result.source.index, result.destination.index);
     setImageListData(imageListDatas);
   };
@@ -94,7 +95,10 @@ const CreateForm: React.FC<CreateFormProps> = props => {
       title="新建商品"
       visible={modalVisible}
       onOk={okHandle}
-      onCancel={() => onCancel()}
+      onCancel={() => {
+        onCancel();
+        setImageListData([{ url: '', file: new File([], '')}]);
+      }}
       width={600}
     >
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="商品图">
@@ -105,7 +109,7 @@ const CreateForm: React.FC<CreateFormProps> = props => {
             <Droppable droppableId="droppable" direction="horizontal">
               {(provided: any) => (
                 <div ref={provided.innerRef} style={getListStyle()} {...provided.droppableProps}>
-                  {imageListData.map((item, index) => {
+                  {imageListData?.map((item, index) => {
                     if (item.url !== '') {
                       return (
                         <Col span={13} key={item.url}>
@@ -123,7 +127,13 @@ const CreateForm: React.FC<CreateFormProps> = props => {
                                 <UploadImageList
                                   item={item}
                                   itemDelete={() => {
-                                    const newData = imageListData || [];
+                                    const newData = [{ url: '', file: new File([], '')}];
+                                    imageListData.map(item => {
+                                      if (newData[0].url === '') {
+                                        newData.splice(0, 1);
+                                      }
+                                      return newData.push({ url: item.url, file: item.file });
+                                    });
                                     newData.splice(index, 1);
                                     setImageListData(newData);
                                   }}
@@ -141,12 +151,15 @@ const CreateForm: React.FC<CreateFormProps> = props => {
                     <Upload
                       showUploadList={false}
                       beforeUpload={(files: File) => {
-                        const imageList = imageListData || [];
-                        if (imageList[0] !== undefined && imageList[0].url === '') {
-                          imageList.splice(0, 1);
-                        }
-                        imageList.push({ url: URL.createObjectURL(files), file: files });
-                        setImageListData(imageList);
+                        const newData = [{ url: '', file: new File([], '')}];
+                        imageListData.map(item => {
+                          if (newData[0].url === '') {
+                            newData.splice(0, 1);
+                          }
+                          return newData.push({ url: item.url, file: item.file });
+                        });
+                        newData.push({ url: URL.createObjectURL(files), file: files });
+                        setImageListData(newData);
                         return false;
                       }}
                     >

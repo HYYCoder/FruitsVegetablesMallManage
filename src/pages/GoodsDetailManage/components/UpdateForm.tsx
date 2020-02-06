@@ -51,7 +51,7 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
     imageListData.map((item, index) => {
       if (item.file.size !== 0) {
         dispatch({
-          type: 'goods/upload',
+          type: 'image/upload',
           payload: item.file,
           callback: (response: any) => {
             newData += '&&';
@@ -125,7 +125,7 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
       onOk={okHandle}
       onCancel={() => {
         onCancel();
-        setImageListData([{ url: '', file: new File([], '') }]);
+        setImageListData([{ url: '', file: new File([], '')}]);
       }}
       width={600}
     >
@@ -156,7 +156,13 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
                                 <UploadImageList
                                   item={item}
                                   itemDelete={() => {
-                                    const newData = imageListData || [];
+                                    const newData = [{ url: '', file: new File([], '')}];
+                                    imageListData.map(item => {
+                                      if (newData[0].url === '') {
+                                        newData.splice(0, 1);
+                                      }
+                                      return newData.push({ url: item.url, file: item.file });
+                                    });
                                     newData.splice(index, 1);
                                     setImageListData(newData);
                                   }}
@@ -174,12 +180,15 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
                     <Upload
                       showUploadList={false}
                       beforeUpload={(files: File) => {
-                        const imageList = imageListData || [];
-                        if (imageList[0] !== undefined && imageList[0].url === '') {
-                          imageList.splice(0, 1);
-                        }
-                        imageList.push({ url: URL.createObjectURL(files), file: files });
-                        setImageListData(imageList);
+                        const newData = [{ url: '', file: new File([], '')}];
+                        imageListData.map(item => {
+                          if (newData[0].url === '') {
+                            newData.splice(0, 1);
+                          }
+                          return newData.push({ url: item.url, file: item.file });
+                        });
+                        newData.push({ url: URL.createObjectURL(files), file: files });
+                        setImageListData(newData);
                         return false;
                       }}
                     >
