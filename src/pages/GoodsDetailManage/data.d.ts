@@ -1,7 +1,7 @@
 export interface TableListItem {
   id: number;
   imageUrls: string;
-  type: string;
+  categoryId: number;
   name: string;
   price: number;
   stock: number;
@@ -17,7 +17,7 @@ export interface imageItem {
 
 export interface ChangeItem {
   imageUrls: string;
-  type: string;
+  categoryId: number;
   name: string;
   price: number;
   stock: number;
@@ -27,7 +27,7 @@ export interface ChangeItem {
 }
 
 export interface TableListParams {
-  type: string;
+  categoryId: number;
   name: string;
   price: number;
   stock: number;

@@ -3,7 +3,7 @@ import { TableListParams, ChangeItem, TableListItem } from './data.d';
 
 export async function queryGoods(params: TableListParams) {
   return request(
-    `/manage/goods?type=${params.type !== undefined ? params.type : ''}&name=${
+    `/manage/goods?type=${params.categoryId !== undefined ? params.categoryId : ''}&name=${
       params.name !== undefined ? params.name : ''
     }&price=${params.price !== undefined ? params.price : ''}&stock=${
       params.stock !== undefined ? params.stock : ''
@@ -36,7 +36,7 @@ export async function addGoods(params: ChangeItem) {
     },
     data: {
       imageUrls: params.imageUrls,
-      type: params.type,
+      categoryId: params.categoryId,
       name: params.name,
       price: params.price,
       stock: params.stock,
@@ -56,7 +56,7 @@ export async function updateGoods(params: TableListItem) {
     data: {
       id: params.id,
       imageUrls: params.imageUrls,
-      type: params.type,
+      categoryId: params.categoryId,
       name: params.name,
       price: params.price,
       stock: params.stock,

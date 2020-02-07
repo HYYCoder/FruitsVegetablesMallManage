@@ -22,7 +22,7 @@ interface TableListProps extends FormComponentProps {
  */
 const handleAdd = async (fields: {
   imageUrls: string;
-  type: string;
+  categoryId: number;
   name: string;
   price: number;
   stock: number;
@@ -34,7 +34,7 @@ const handleAdd = async (fields: {
   try {
     await addGoods({
       imageUrls: fields.imageUrls,
-      type: fields.type,
+      categoryId: fields.categoryId,
       name: fields.name,
       price: fields.price,
       stock: fields.stock,
@@ -60,7 +60,7 @@ const handleUpdate = async (
   ids: number,
   fields: {
     imageUrls: string;
-    type: string;
+    categoryId: number;
     name: string;
     price: number;
     stock: number;
@@ -74,7 +74,7 @@ const handleUpdate = async (
     await updateGoods({
       id: ids,
       imageUrls: fields.imageUrls,
-      type: fields.type,
+      categoryId: fields.categoryId,
       name: fields.name,
       price: fields.price,
       stock: fields.stock,
@@ -121,7 +121,7 @@ const TableList: React.FC<TableListProps> = () => {
   const columns: ProColumns<TableListItem>[] = [
     {
       title: '商品类型',
-      dataIndex: 'type',
+      dataIndex: 'categoryId',
     },
     {
       title: '商品名',
