@@ -28,6 +28,9 @@ const handleAdd = async (fields: {
   stock: number;
   specification: string;
   reducedPrice: number;
+  minimunOrderQuantity: number;
+	maximumOrderQuantity: number;
+	minimumIncrementQuantity: number;
   detail: string;
 }) => {
   const hide = message.loading('正在添加');
@@ -40,6 +43,9 @@ const handleAdd = async (fields: {
       stock: fields.stock,
       specification: fields.specification,
       reducedPrice: fields.reducedPrice,
+      minimunOrderQuantity: fields.minimunOrderQuantity,
+      maximumOrderQuantity: fields.maximumOrderQuantity,
+      minimumIncrementQuantity: fields.minimumIncrementQuantity,
       detail: fields.detail,
     });
     hide();
@@ -66,6 +72,9 @@ const handleUpdate = async (
     stock: number;
     specification: string;
     reducedPrice: number;
+    minimunOrderQuantity: number;
+    maximumOrderQuantity: number;
+    minimumIncrementQuantity: number;
     detail: string;
   },
 ) => {
@@ -80,6 +89,9 @@ const handleUpdate = async (
       stock: fields.stock,
       specification: fields.specification,
       reducedPrice: fields.reducedPrice,
+      minimunOrderQuantity: fields.minimunOrderQuantity,
+      maximumOrderQuantity: fields.maximumOrderQuantity,
+      minimumIncrementQuantity: fields.minimumIncrementQuantity,
       detail: fields.detail,
     });
     hide();
@@ -148,6 +160,18 @@ const TableList: React.FC<TableListProps> = () => {
     {
       title: '打折减价',
       dataIndex: 'reducedPrice',
+    },
+    {
+      title: '最少下单',
+      dataIndex: 'minimunOrderQuantity',
+    },
+    {
+      title: '最多下单',
+      dataIndex: 'maximumOrderQuantity',
+    },
+    {
+      title: '下单增量',
+      dataIndex: 'minimumIncrementQuantity',
     },
     {
       title: '操作',

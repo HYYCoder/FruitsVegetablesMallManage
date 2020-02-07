@@ -18,12 +18,15 @@ interface UpdateFormProps extends FormComponentProps {
     id: number,
     fieldsValue: {
       imageUrls: string;
-      type: string;
+      categoryId: number;
       name: string;
       price: number;
       stock: number;
       specification: string;
       reducedPrice: number;
+      minimunOrderQuantity: number;
+      maximumOrderQuantity: number;
+      minimumIncrementQuantity: number;
       detail: string;
     },
   ) => void;
@@ -228,14 +231,14 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
         )}
       </FormItem>
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="商品类型">
-        {form.getFieldDecorator('type', {
-          rules: [{ required: true, message: '请输入至少1个字符的规则描述！', min: 1 }],
-          initialValue: updateData?.type,
+        {form.getFieldDecorator('categoryId', {
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
+          initialValue: updateData?.categoryId,
         })(<Input placeholder="请输入" />)}
       </FormItem>
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="商品名">
         {form.getFieldDecorator('name', {
-          rules: [{ required: true, message: '请输入至少1个字符的规则描述！', min: 1 }],
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
           initialValue: updateData?.name,
         })(<Input placeholder="请输入" />)}
       </FormItem>
@@ -263,9 +266,27 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
           initialValue: updateData?.reducedPrice,
         })(<Input placeholder="请输入" />)}
       </FormItem>
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="最少下单">
+        {form.getFieldDecorator('minimunOrderQuantity', {
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
+          initialValue: updateData?.minimunOrderQuantity,
+        })(<Input placeholder="请输入" />)}
+      </FormItem>
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="最多下单">
+        {form.getFieldDecorator('maximumOrderQuantity', {
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
+          initialValue: updateData?.maximumOrderQuantity,
+        })(<Input placeholder="请输入" />)}
+      </FormItem>
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="下单增量">
+        {form.getFieldDecorator('minimumIncrementQuantity', {
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
+          initialValue: updateData?.minimumIncrementQuantity,
+        })(<Input placeholder="请输入" />)}
+      </FormItem>
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="描述">
         {form.getFieldDecorator('detail', {
-          rules: [{ required: true, message: '请输入至少1个字符的规则描述！', min: 1 }],
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
           initialValue: updateData?.detail,
         })(<Input placeholder="请输入" />)}
       </FormItem>

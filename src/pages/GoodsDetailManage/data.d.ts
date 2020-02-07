@@ -7,6 +7,9 @@ export interface TableListItem {
   stock: number;
   specification: string;
   reducedPrice: number;
+  minimunOrderQuantity: number;
+	maximumOrderQuantity: number;
+	minimumIncrementQuantity: number;
   detail: string;
 }
 
@@ -23,6 +26,9 @@ export interface ChangeItem {
   stock: number;
   specification: string;
   reducedPrice: number;
+  minimunOrderQuantity: number;
+	maximumOrderQuantity: number;
+	minimumIncrementQuantity: number;
   detail: string;
 }
 

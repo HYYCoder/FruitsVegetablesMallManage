@@ -3,7 +3,7 @@ import { TableListParams, ChangeItem, TableListItem } from './data.d';
 
 export async function queryGoods(params: TableListParams) {
   return request(
-    `/manage/goods?type=${params.categoryId !== undefined ? params.categoryId : ''}&name=${
+    `/manage/goods?categoryId=${params.categoryId !== undefined ? params.categoryId : ''}&name=${
       params.name !== undefined ? params.name : ''
     }&price=${params.price !== undefined ? params.price : ''}&stock=${
       params.stock !== undefined ? params.stock : ''
@@ -42,6 +42,9 @@ export async function addGoods(params: ChangeItem) {
       stock: params.stock,
       specification: params.specification,
       reducedPrice: params.reducedPrice,
+      minimunOrderQuantity: params.minimunOrderQuantity,
+      maximumOrderQuantity: params.maximumOrderQuantity,
+      minimumIncrementQuantity: params.minimumIncrementQuantity,
       detail: params.detail,
     },
   });
@@ -62,6 +65,9 @@ export async function updateGoods(params: TableListItem) {
       stock: params.stock,
       specification: params.specification,
       reducedPrice: params.reducedPrice,
+      minimunOrderQuantity: params.minimunOrderQuantity,
+      maximumOrderQuantity: params.maximumOrderQuantity,
+      minimumIncrementQuantity: params.minimumIncrementQuantity,
       detail: params.detail,
     },
   });

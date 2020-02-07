@@ -15,12 +15,15 @@ interface CreateFormProps extends FormComponentProps {
   modalVisible: boolean;
   onSubmit: (fieldsValue: {
     imageUrls: string;
-    type: string;
+    categoryId: number;
     name: string;
     price: number;
     stock: number;
     specification: string;
     reducedPrice: number;
+    minimunOrderQuantity: number;
+    maximumOrderQuantity: number;
+    minimumIncrementQuantity: number;
     detail: string;
   }) => void;
   onCancel: () => void;
@@ -199,7 +202,7 @@ const CreateForm: React.FC<CreateFormProps> = props => {
         )}
       </FormItem>
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="商品类型">
-        {form.getFieldDecorator('type', {
+        {form.getFieldDecorator('categoryId', {
           rules: [{ required: true, message: '请输入至少1个字符的规则描述！', min: 1 }],
         })(<Input placeholder="请输入" />)}
       </FormItem>
@@ -225,6 +228,21 @@ const CreateForm: React.FC<CreateFormProps> = props => {
       </FormItem>
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="打折减价">
         {form.getFieldDecorator('reducedPrice', {
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！', min: 1 }],
+        })(<Input placeholder="请输入" />)}
+      </FormItem>
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="最少下单">
+        {form.getFieldDecorator('minimunOrderQuantity', {
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！', min: 1 }],
+        })(<Input placeholder="请输入" />)}
+      </FormItem>
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="最多下单">
+        {form.getFieldDecorator('maximumOrderQuantity', {
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！', min: 1 }],
+        })(<Input placeholder="请输入" />)}
+      </FormItem>
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="下单增量">
+        {form.getFieldDecorator('minimumIncrementQuantity', {
           rules: [{ required: true, message: '请输入至少1个字符的规则描述！', min: 1 }],
         })(<Input placeholder="请输入" />)}
       </FormItem>
