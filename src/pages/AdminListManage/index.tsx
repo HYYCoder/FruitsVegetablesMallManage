@@ -146,7 +146,7 @@ const TableList: React.FC<TableListProps> = () => {
           <Divider type="vertical" />
           <a>
             <Popconfirm
-              title="是否确定要删除轮播图?"
+              title="是否确定要删除管理员?"
               onConfirm={() => {
                 removeAdmin(record.id);
                 window.location.reload();
@@ -197,9 +197,6 @@ const TableList: React.FC<TableListProps> = () => {
         tableAlertRender={(selectedRowKeys, selectedRows) => (
           <div>
             已选择 <a style={{ fontWeight: 600 }}>{selectedRowKeys.length}</a> 项&nbsp;&nbsp;
-            <span>
-              服务调用次数总计 {selectedRows.reduce((pre, item) => pre + item.id, 0)} 万
-            </span>
           </div>
         )}
         request={params => queryAdmin(params)}

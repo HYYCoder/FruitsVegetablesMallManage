@@ -9,7 +9,7 @@ import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
 import CreateForm from './components/CreateForm';
 import UpdateForm from './components/UpdateForm';
 import { TableListItem } from './data.d';
-import { queryBanner, updateBanner, addBanner, removeBanner } from './service';
+import { queryUser, updateUser, addUser, removeUser } from './service';
 import { Dispatch, AnyAction } from 'redux';
 
 interface TableListProps extends FormComponentProps {
@@ -21,16 +21,22 @@ interface TableListProps extends FormComponentProps {
  * @param fields
  */
 const handleAdd = async (fields: {
-  orders: number;
-  imageUrl: string;
-  detail: string;
+  name: string;
+  mobile: string;
+  address: string;
+  userName: string;
+  password: string;
+  receivingPhone: string;
 }) => {
   const hide = message.loading('正在添加');
   try {
-    await addBanner({
-      orders: fields.orders,
-      imageUrl: fields.imageUrl,
-      detail: fields.detail,
+    await addUser({
+      name: fields.name,
+      mobile: fields.mobile,
+      address: fields.address,
+      userName: fields.userName,
+      password: fields.password,
+      receivingPhone: fields.receivingPhone,
     });
     hide();
     message.success('添加成功');
@@ -47,19 +53,25 @@ const handleAdd = async (fields: {
  * @param fields
  */
 const handleUpdate = async (
-  ids: number,
+  userName: string,
   fields: {
-    orders: number;
-    imageUrl: string;
-    detail: string;
-  },) => {
+    id: number;
+    name: string;
+    mobile: string;
+    address: string;
+    password: string;
+    receivingPhone: string;
+}) => {
   const hide = message.loading('正在配置');
   try {
-    await updateBanner({
-      id: ids,
-      orders: fields.orders,
-      imageUrl: fields.imageUrl,
-      detail: fields.detail,
+    await updateUser({
+      id: fields.id,
+      name: fields.name,
+      mobile: fields.mobile,
+      address: fields.address,
+      userName: userName,
+      password: fields.password,
+      receivingPhone: fields.receivingPhone,
     });
     hide();
 
@@ -80,7 +92,7 @@ const handleRemove = async (selectedRows: TableListItem[]) => {
   const hide = message.loading('正在删除');
   if (!selectedRows) return true;
   try {
-    await selectedRows.map(row => removeBanner(row.id));
+    await selectedRows.map(row => removeUser(row.id));
     hide();
     message.success('删除成功，即将刷新');
     return true;
@@ -99,20 +111,28 @@ const TableList: React.FC<TableListProps> = () => {
   const actionRef = useRef<ActionType>();
   const columns: ProColumns<TableListItem>[] = [
     {
-      title: '优先级',
-      dataIndex: 'orders',
+      title: '姓名',
+      dataIndex: 'name',
     },
     {
-      title: '图片',
-      dataIndex: 'imageUrl',
+      title: '手机号',
+      dataIndex: 'mobile',
     },
     {
-      title: '描述',
-      dataIndex: 'detail',
+      title: '地址',
+      dataIndex: 'address',
+    },
+    {
+      title: '用户名',
+      dataIndex: 'userName',
+    },
+    {
+      title: '收货手机号',
+      dataIndex: 'receivingPhone',
     },
     {
       title: '操作',
-      dataIndex: 'id',
+      dataIndex: 'option',
       valueType: 'option',
       render: (_, record) => (
         <>
@@ -120,7 +140,7 @@ const TableList: React.FC<TableListProps> = () => {
             onClick={() => {
               handleUpdateModalVisible(true);
               const newData = [{ url: '', file: new File([], '') }];
-              newData.push({ url: record.imageUrl, file: new File([], '') });
+              //newData.push({ url: record.imageUrl, file: new File([], '') });
               handleImageListData(newData);
               handleUpdateData(record);
             }}
@@ -130,9 +150,9 @@ const TableList: React.FC<TableListProps> = () => {
           <Divider type="vertical" />
           <a>
             <Popconfirm
-              title="是否确定要删除轮播图?"
+              title="是否确定要删除用户?"
               onConfirm={() => {
-                removeBanner(record.id);
+                removeUser(record.id);
                 window.location.reload();
               }}
               okText="确认"
@@ -149,7 +169,7 @@ const TableList: React.FC<TableListProps> = () => {
   return (
     <PageHeaderWrapper>
       <ProTable<TableListItem>
-        headerTitle="轮播图列表"
+        headerTitle="用户列表"
         actionRef={actionRef}
         rowKey="id"
         toolBarRender={(action, { selectedRows }) => [
@@ -183,7 +203,7 @@ const TableList: React.FC<TableListProps> = () => {
             已选择 <a style={{ fontWeight: 600 }}>{selectedRowKeys.length}</a> 项&nbsp;&nbsp;
           </div>
         )}
-        request={params => queryBanner(params)}
+        request={params => queryUser(params)}
         columns={columns}
         rowSelection={{}}
       />

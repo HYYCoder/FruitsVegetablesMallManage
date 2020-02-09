@@ -17,11 +17,11 @@ export interface UpdateFormProps extends FormComponentProps {
     userName: string,
     fieldsValue: {
       id: number;
-      password: string;
-      type: string;
-      imageUrl: string;
-      mobile: string;
       name: string;
+      mobile: string;
+      address: string;
+      password: string;
+      receivingPhone: string;
     },
   ) => void;
   onCancel: () => void;
@@ -43,43 +43,51 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
   } = props;
 
   const okHandle = () => {
-    let newData = '';
-    const { dispatch } = props;
-    imageListData.map((item, index) => {
-      if (item.file.size !== 0) {
-        dispatch({
-          type: 'image/upload',
-          payload: item.file,
-          callback: (response: any) => {
-            newData += response;
-            if (index + 1 === imageListData.length) {
-              form.setFieldsValue({
-                imageUrl: newData,
-                id: 0,
-              });
-              form.validateFields((err, fieldsValue) => {
-                if (err) return;
-                form.resetFields();
-                handleUpdate(updateData.userName, fieldsValue);
-              });
-            }
-          },
-        });
-      } else {
-        newData += item.url;
-      }
-      if (item.file.size === 0 && index + 1 === imageListData.length) {
-        form.setFieldsValue({
-          imageUrl: newData,
-        });
-        form.validateFields((err, fieldsValue) => {
-          if (err) return;
-          form.resetFields();
-          handleUpdate(updateData.userName, fieldsValue);
-        });
-      }
-      return null;
+    form.setFieldsValue({
+      id: 0,
     });
+    form.validateFields((err, fieldsValue) => {
+      if (err) return;
+      form.resetFields();
+      handleUpdate(updateData.userName, fieldsValue);
+    });
+    // let newData = '';
+    // const { dispatch } = props;
+    // imageListData.map((item, index) => {
+    //   if (item.file.size !== 0) {
+    //     dispatch({
+    //       type: 'image/upload',
+    //       payload: item.file,
+    //       callback: (response: any) => {
+    //         newData += response;
+    //         if (index + 1 === imageListData.length) {
+    //           form.setFieldsValue({
+    //             imageUrl: newData,
+    //             id: 0,
+    //           });
+    //           form.validateFields((err, fieldsValue) => {
+    //             if (err) return;
+    //             form.resetFields();
+    //             handleUpdate(updateData.userName, fieldsValue);
+    //           });
+    //         }
+    //       },
+    //     });
+    //   } else {
+    //     newData += item.url;
+    //   }
+    //   if (item.file.size === 0 && index + 1 === imageListData.length) {
+    //     form.setFieldsValue({
+    //       imageUrl: newData,
+    //     });
+    //     form.validateFields((err, fieldsValue) => {
+    //       if (err) return;
+    //       form.resetFields();
+    //       handleUpdate(updateData.userName, fieldsValue);
+    //     });
+    //   }
+    //   return null;
+    // });
   };
 
   return (
@@ -94,7 +102,36 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
     }}
     width={600}
     >
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="头像">
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="姓名">
+        {form.getFieldDecorator('name', {
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
+          initialValue: updateData?.name,
+        })(<Input placeholder="请输入" />)}
+      </FormItem>
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="手机号">
+        {form.getFieldDecorator('mobile', {
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
+          initialValue: updateData?.mobile,
+        })(<Input placeholder="请输入" />)}
+      </FormItem>
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="地址">
+        {form.getFieldDecorator('address', {
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
+          initialValue: updateData?.address,
+        })(<Input placeholder="请输入" />)}
+      </FormItem>
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="收货手机">
+        {form.getFieldDecorator('receivingPhone', {
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
+          initialValue: updateData?.receivingPhone,
+        })(<Input placeholder="请输入" />)}
+      </FormItem>
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="密码">
+        {form.getFieldDecorator('password', {
+          rules: [{ required: false, message: '请输入至少1个字符的规则描述！' }],
+        })(<Input placeholder="请输入" />)}
+      </FormItem>
+      {/* <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="头像">
       {form.getFieldDecorator('imageUrl', {
         rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
       })(
@@ -158,30 +195,7 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
           </Col>
         </Row>
         )}
-      </FormItem>
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="密码">
-        {form.getFieldDecorator('password', {
-          rules: [{ required: false, message: '请输入至少1个字符的规则描述！' }],
-        })(<Input placeholder="请输入" />)}
-      </FormItem>
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="类型">
-        {form.getFieldDecorator('type', {
-          rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
-          initialValue: updateData?.type,
-        })(<Input placeholder="请输入" />)}
-      </FormItem>
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="姓名">
-        {form.getFieldDecorator('name', {
-          rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
-          initialValue: updateData?.name,
-        })(<Input placeholder="请输入" />)}
-      </FormItem>
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="手机号">
-        {form.getFieldDecorator('mobile', {
-          rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
-          initialValue: updateData?.mobile,
-        })(<Input placeholder="请输入" />)}
-      </FormItem>
+      </FormItem> */}
     </Modal>
   );
 }

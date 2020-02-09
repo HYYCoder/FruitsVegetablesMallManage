@@ -249,7 +249,7 @@ const TableList: React.FC<TableListProps> = () => {
         tableAlertRender={(selectedRowKeys, selectedRows) => (
           <div>
             已选择 <a style={{ fontWeight: 600 }}>{selectedRowKeys.length}</a> 项&nbsp;&nbsp;
-            <span>总价 {selectedRows.reduce((pre, item) => pre + item.price, 0)} 万</span>
+            <span>总价 {selectedRows.reduce((pre, item) => pre + item.price, 0)} 元</span>
           </div>
         )}
         request={params => queryGoods(params)}
