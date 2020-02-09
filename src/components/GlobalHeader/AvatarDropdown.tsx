@@ -8,6 +8,7 @@ import { ConnectProps, ConnectState } from '@/models/connect';
 import { CurrentUser } from '@/models/user';
 import HeaderDropdown from '../HeaderDropdown';
 import styles from './index.less';
+import { imageURL } from '../../../jest.config';
 
 export interface GlobalHeaderRightProps extends ConnectProps {
   currentUser?: CurrentUser;
@@ -36,7 +37,7 @@ class AvatarDropdown extends React.Component<GlobalHeaderRightProps> {
   render(): React.ReactNode {
     const {
       currentUser = {
-        avatar: '',
+        imageUrl: '',
         name: '',
       },
       menu,
@@ -66,7 +67,7 @@ class AvatarDropdown extends React.Component<GlobalHeaderRightProps> {
     return currentUser && currentUser.name ? (
       <HeaderDropdown overlay={menuHeaderDropdown}>
         <span className={`${styles.action} ${styles.account}`}>
-          <Avatar size="small" className={styles.avatar} src={currentUser.avatar} alt="avatar" />
+          <Avatar size="small" className={styles.avatar} src={imageURL+currentUser.imageUrl} alt="avatar" />
           <span className={styles.name}>{currentUser.name}</span>
         </span>
       </HeaderDropdown>

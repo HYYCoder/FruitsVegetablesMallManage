@@ -13,9 +13,12 @@ const FormItem = Form.Item;
 interface CreateFormProps extends FormComponentProps {
   modalVisible: boolean;
   onSubmit: (fieldsValue: { 
-    orders: number;
-    imageUrl: string; 
-    detail: string;
+    userName: string;
+    password: string;
+    type: string;
+    imageUrl: string;
+    mobile: string;
+    name: string;
   }) => void;
   onCancel: () => void;
   dispatch: Dispatch<AnyAction>;
@@ -53,7 +56,7 @@ const CreateForm: React.FC<CreateFormProps> = props => {
   return (
     <Modal
       destroyOnClose
-      title="新建轮播图"
+      title="新建管理员"
       visible={modalVisible}
       onOk={okHandle}
       onCancel={() => {
@@ -128,14 +131,29 @@ const CreateForm: React.FC<CreateFormProps> = props => {
           </Col>
         </Row>)}
       </FormItem>
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="排序">
-        {form.getFieldDecorator('orders', {
-          rules: [{ required: true, message: '请输入至少1个字符的规则描述！', min: 1 }],
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="用户名">
+        {form.getFieldDecorator('userName', {
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
         })(<Input placeholder="请输入" />)}
       </FormItem>
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="描述">
-        {form.getFieldDecorator('detail', {
-          rules: [{ required: true, message: '请输入至少1个字符的规则描述！', min: 1 }],
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="密码">
+        {form.getFieldDecorator('password', {
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
+        })(<Input placeholder="请输入" />)}
+      </FormItem>
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="类型">
+        {form.getFieldDecorator('type', {
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
+        })(<Input placeholder="请输入" />)}
+      </FormItem>
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="手机号">
+        {form.getFieldDecorator('mobile', {
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
+        })(<Input placeholder="请输入" />)}
+      </FormItem>
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="姓名">
+        {form.getFieldDecorator('name', {
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
         })(<Input placeholder="请输入" />)}
       </FormItem>
     </Modal>

@@ -1,6 +1,6 @@
 import { Form, Icon } from '@ant-design/compatible';
 import '@ant-design/compatible/assets/index.css';
-import { Input, Modal, Upload, Row, Col } from 'antd';
+import { Input, Modal, Row, Col, Upload } from 'antd';
 import React, { useState } from 'react';
 import { FormComponentProps } from '@ant-design/compatible/es/form';
 import { formatMessage } from 'umi-plugin-react/locale';

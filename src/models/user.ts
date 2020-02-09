@@ -18,7 +18,7 @@ export interface CurrentUser {
   id?: number;
   userName?: string;
   type?: string;
-  avatar?: string;
+  imageUrl?: string;
   mobile?: string;
   name?: string;
 }

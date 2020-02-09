@@ -113,6 +113,12 @@ export default {
               authority: ['admin'],
             },
             {
+              name: 'adminlist',
+              icon: 'smile',
+              path: '/adminlistmanage',
+              component: './AdminListManage',
+            },
+            {
               name: 'bannerlist',
               icon: 'smile',
               path: '/bannerlistmanage',

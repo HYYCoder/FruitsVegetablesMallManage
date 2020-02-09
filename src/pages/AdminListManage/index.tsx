@@ -9,7 +9,7 @@ import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
 import CreateForm from './components/CreateForm';
 import UpdateForm from './components/UpdateForm';
 import { TableListItem } from './data.d';
-import { queryBanner, updateBanner, addBanner, removeBanner } from './service';
+import { queryAdmin, updateAdmin, addAdmin, removeAdmin } from './service';
 import { Dispatch, AnyAction } from 'redux';
 
 interface TableListProps extends FormComponentProps {
@@ -21,16 +21,22 @@ interface TableListProps extends FormComponentProps {
  * @param fields
  */
 const handleAdd = async (fields: {
-  orders: number;
+  userName: string;
+  password: string;
+  type: string;
   imageUrl: string;
-  detail: string;
+  mobile: string;
+  name: string;
 }) => {
   const hide = message.loading('正在添加');
   try {
-    await addBanner({
-      orders: fields.orders,
+    await addAdmin({
+      userName: fields.userName,
+      password: fields.password,
+      type: fields.type,
       imageUrl: fields.imageUrl,
-      detail: fields.detail,
+      mobile: fields.mobile,
+      name: fields.name,
     });
     hide();
     message.success('添加成功');
@@ -47,19 +53,25 @@ const handleAdd = async (fields: {
  * @param fields
  */
 const handleUpdate = async (
-  ids: number,
+  userName: string,
   fields: {
-    orders: number;
+    id: number;
+    password: string;
+    type: string;
     imageUrl: string;
-    detail: string;
-  },) => {
+    mobile: string;
+    name: string;
+}) => {
   const hide = message.loading('正在配置');
   try {
-    await updateBanner({
-      id: ids,
-      orders: fields.orders,
+    await updateAdmin({
+      id: fields.id,
+      userName: userName,
+      password: fields.password,
+      type: fields.type,
       imageUrl: fields.imageUrl,
-      detail: fields.detail,
+      mobile: fields.mobile,
+      name: fields.name,
     });
     hide();
 
@@ -80,7 +92,7 @@ const handleRemove = async (selectedRows: TableListItem[]) => {
   const hide = message.loading('正在删除');
   if (!selectedRows) return true;
   try {
-    await selectedRows.map(row => removeBanner(row.id));
+    await selectedRows.map(row => removeAdmin(row.id));
     hide();
     message.success('删除成功，即将刷新');
     return true;
@@ -99,16 +111,20 @@ const TableList: React.FC<TableListProps> = () => {
   const actionRef = useRef<ActionType>();
   const columns: ProColumns<TableListItem>[] = [
     {
-      title: '优先级',
-      dataIndex: 'orders',
+      title: '用户名',
+      dataIndex: 'userName',
     },
     {
-      title: '图片',
-      dataIndex: 'imageUrl',
+      title: '类型',
+      dataIndex: 'type',
     },
     {
-      title: '描述',
-      dataIndex: 'detail',
+      title: '手机号',
+      dataIndex: 'mobile',
+    },
+    {
+      title: '姓名',
+      dataIndex: 'name',
     },
     {
       title: '操作',
@@ -132,7 +148,7 @@ const TableList: React.FC<TableListProps> = () => {
             <Popconfirm
               title="是否确定要删除轮播图?"
               onConfirm={() => {
-                removeBanner(record.id);
+                removeAdmin(record.id);
                 window.location.reload();
               }}
               okText="确认"
@@ -149,7 +165,7 @@ const TableList: React.FC<TableListProps> = () => {
   return (
     <PageHeaderWrapper>
       <ProTable<TableListItem>
-        headerTitle="轮播图列表"
+        headerTitle="管理员列表"
         actionRef={actionRef}
         rowKey="id"
         toolBarRender={(action, { selectedRows }) => [
@@ -186,7 +202,7 @@ const TableList: React.FC<TableListProps> = () => {
             </span>
           </div>
         )}
-        request={params => queryBanner(params)}
+        request={params => queryAdmin(params)}
         columns={columns}
         rowSelection={{}}
       />

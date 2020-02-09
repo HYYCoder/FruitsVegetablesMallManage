@@ -14,11 +14,14 @@ const FormItem = Form.Item;
 export interface UpdateFormProps extends FormComponentProps {
   updateModalVisible: boolean;
   onSubmit: (
-    id: number,
+    userName: string,
     fieldsValue: {
-      orders: number;
+      id: number;
+      password: string;
+      type: string;
       imageUrl: string;
-      detail: string;
+      mobile: string;
+      name: string;
     },
   ) => void;
   onCancel: () => void;
@@ -52,11 +55,12 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
             if (index + 1 === imageListData.length) {
               form.setFieldsValue({
                 imageUrl: newData,
+                id: 0,
               });
               form.validateFields((err, fieldsValue) => {
                 if (err) return;
                 form.resetFields();
-                handleUpdate(updateData.id, fieldsValue);
+                handleUpdate(updateData.userName, fieldsValue);
               });
             }
           },
@@ -71,7 +75,7 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
         form.validateFields((err, fieldsValue) => {
           if (err) return;
           form.resetFields();
-          handleUpdate(updateData.id, fieldsValue);
+          handleUpdate(updateData.userName, fieldsValue);
         });
       }
       return null;
@@ -90,7 +94,7 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
     }}
     width={600}
     >
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="商品图">
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="头像">
       {form.getFieldDecorator('imageUrl', {
         rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
       })(
@@ -155,16 +159,21 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
         </Row>
         )}
       </FormItem>
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="排序">
-        {form.getFieldDecorator('orders', {
-          rules: [{ required: true, message: '请输入至少1个字符的规则描述！', min: 1 }],
-          initialValue: updateData?.orders,
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="密码">
+        {form.getFieldDecorator('password', {
+          rules: [{ required: false, message: '请输入至少1个字符的规则描述！' }],
         })(<Input placeholder="请输入" />)}
       </FormItem>
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="描述">
-        {form.getFieldDecorator('detail', {
-          rules: [{ required: true, message: '请输入至少1个字符的规则描述！', min: 1 }],
-          initialValue: updateData?.detail,
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="类型">
+        {form.getFieldDecorator('type', {
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
+          initialValue: updateData?.type,
+        })(<Input placeholder="请输入" />)}
+      </FormItem>
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="姓名">
+        {form.getFieldDecorator('name', {
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
+          initialValue: updateData?.name,
         })(<Input placeholder="请输入" />)}
       </FormItem>
     </Modal>
