@@ -137,6 +137,12 @@ export default {
               component: './GoodsDetailManage',
             },
             {
+              name: 'orderlist',
+              icon: 'smile',
+              path: '/orderlistmanage',
+              component: './OrderListManage',
+            },
+            {
               component: './404',
             },
           ],

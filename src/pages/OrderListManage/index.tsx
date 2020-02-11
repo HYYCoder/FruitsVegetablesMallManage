@@ -9,7 +9,7 @@ import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
 import CreateForm from './components/CreateForm';
 import UpdateForm from './components/UpdateForm';
 import { TableListItem } from './data.d';
-import { queryBanner, updateBanner, addBanner, removeBanner } from './service';
+import { queryOrder, updateOrder, addOrder, removeOrder } from './service';
 import { Dispatch, AnyAction } from 'redux';
 
 interface TableListProps extends FormComponentProps {
@@ -21,16 +21,34 @@ interface TableListProps extends FormComponentProps {
  * @param fields
  */
 const handleAdd = async (fields: {
-  orders: number;
-  imageUrl: string;
-  detail: string;
+  code: string;
+  date: string;
+  details: string;
+  amount: string;
+  discountAmount: number;
+  paidAmount: number;
+  receiver: number;
+  address: string;
+  mobile: string;
+  note: string;
+  userId: number;
+  status: string;
 }) => {
   const hide = message.loading('正在添加');
   try {
-    await addBanner({
-      orders: fields.orders,
-      imageUrl: fields.imageUrl,
-      detail: fields.detail,
+    await addOrder({
+      code: fields.code,
+      date: fields.date,
+      details: fields.details,
+      amount: fields.amount,
+      discountAmount: fields.discountAmount,
+      paidAmount: fields.paidAmount,
+      receiver: fields.receiver,
+      address: fields.address,
+      mobile: fields.mobile,
+      note: fields.note,
+      userId: fields.userId,
+      status: fields.status,
     });
     hide();
     message.success('添加成功');
@@ -49,17 +67,35 @@ const handleAdd = async (fields: {
 const handleUpdate = async (
   ids: number,
   fields: {
-    orders: number;
-    imageUrl: string;
-    detail: string;
-  },) => {
+    code: string;
+    date: string;
+    details: string;
+    amount: string;
+    discountAmount: number;
+    paidAmount: number;
+    receiver: number;
+    address: string;
+    mobile: string;
+    note: string;
+    userId: number;
+    status: string;
+}) => {
   const hide = message.loading('正在修改');
   try {
-    await updateBanner({
+    await updateOrder({
       id: ids,
-      orders: fields.orders,
-      imageUrl: fields.imageUrl,
-      detail: fields.detail,
+      code: fields.code,
+      date: fields.date,
+      details: fields.details,
+      amount: fields.amount,
+      discountAmount: fields.discountAmount,
+      paidAmount: fields.paidAmount,
+      receiver: fields.receiver,
+      address: fields.address,
+      mobile: fields.mobile,
+      note: fields.note,
+      userId: fields.userId,
+      status: fields.status,
     });
     hide();
 
@@ -80,7 +116,7 @@ const handleRemove = async (selectedRows: TableListItem[]) => {
   const hide = message.loading('正在删除');
   if (!selectedRows) return true;
   try {
-    await selectedRows.map(row => removeBanner(row.id));
+    await selectedRows.map(row => removeOrder(row.id));
     hide();
     message.success('删除成功，即将刷新');
     return true;
@@ -99,16 +135,52 @@ const TableList: React.FC<TableListProps> = () => {
   const actionRef = useRef<ActionType>();
   const columns: ProColumns<TableListItem>[] = [
     {
-      title: '优先级',
-      dataIndex: 'orders',
+      title: '订单编号',
+      dataIndex: 'code',
     },
     {
-      title: '图片',
-      dataIndex: 'imageUrl',
+      title: '时间',
+      dataIndex: 'date',
     },
     {
-      title: '描述',
-      dataIndex: 'detail',
+      title: '商品编号',
+      dataIndex: 'details',
+    },
+    {
+      title: '原价',
+      dataIndex: 'amount',
+    },
+    {
+      title: '折扣',
+      dataIndex: 'discountAmount',
+    },
+    {
+      title: '总价',
+      dataIndex: 'paidAmount',
+    },
+    {
+      title: '收货手机',
+      dataIndex: 'receiver',
+    },
+    {
+      title: '地址',
+      dataIndex: 'address',
+    },
+    {
+      title: '手机号',
+      dataIndex: 'mobile',
+    },
+    {
+      title: '备注',
+      dataIndex: 'note',
+    },
+    {
+      title: '用户编号',
+      dataIndex: 'userId',
+    },
+    {
+      title: '状态',
+      dataIndex: 'status',
     },
     {
       title: '操作',
@@ -120,7 +192,12 @@ const TableList: React.FC<TableListProps> = () => {
             onClick={() => {
               handleUpdateModalVisible(true);
               const newData = [{ url: '', file: new File([], '') }];
-              newData.push({ url: record.imageUrl, file: new File([], '') });
+              // record.imageUrls.split('&&').map(item => {
+              //   if (newData[0].url === '') {
+              //     newData.splice(0, 1);
+              //   }
+              //   return newData.push({ url: item, file: new File([], '') });
+              // });
               handleImageListData(newData);
               handleUpdateData(record);
             }}
@@ -130,9 +207,9 @@ const TableList: React.FC<TableListProps> = () => {
           <Divider type="vertical" />
           <a>
             <Popconfirm
-              title="是否确定要删除轮播图?"
+              title="是否确定要删除订单?"
               onConfirm={() => {
-                removeBanner(record.id);
+                removeOrder(record.id);
                 window.location.reload();
               }}
               okText="确认"
@@ -149,7 +226,7 @@ const TableList: React.FC<TableListProps> = () => {
   return (
     <PageHeaderWrapper>
       <ProTable<TableListItem>
-        headerTitle="轮播图列表"
+        headerTitle="订单列表"
         actionRef={actionRef}
         rowKey="id"
         toolBarRender={(action, { selectedRows }) => [
@@ -183,7 +260,7 @@ const TableList: React.FC<TableListProps> = () => {
             已选择 <a style={{ fontWeight: 600 }}>{selectedRowKeys.length}</a> 项&nbsp;&nbsp;
           </div>
         )}
-        request={params => queryBanner(params)}
+        request={params => queryOrder(params)}
         columns={columns}
         rowSelection={{}}
       />

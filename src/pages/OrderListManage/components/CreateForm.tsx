@@ -1,6 +1,6 @@
 import { Form } from '@ant-design/compatible';
 import '@ant-design/compatible/assets/index.css';
-import { Input, Modal } from 'antd';
+import { Input, Modal} from 'antd';
 import React from 'react';
 import { FormComponentProps } from '@ant-design/compatible/es/form';
 //import { formatMessage } from 'umi-plugin-react/locale';
@@ -12,20 +12,27 @@ const FormItem = Form.Item;
 
 interface CreateFormProps extends FormComponentProps {
   modalVisible: boolean;
-  onSubmit: (fieldsValue: {   
-    name: string;
-    mobile: string;
+  onSubmit: (fields: {
+    code: string;
+    date: string;
+    details: string;
+    amount: string;
+    discountAmount: number;
+    paidAmount: number;
+    receiver: number;
     address: string;
-    userName: string;
-    password: string;
-    receivingPhone: string; }) => void;
+    mobile: string;
+    note: string;
+    userId: number;
+    status: string;
+  }) => void;
   onCancel: () => void;
   dispatch: Dispatch<AnyAction>;
 }
 
 const CreateForm: React.FC<CreateFormProps> = props => {
   const { modalVisible, form, onSubmit: handleAdd, onCancel } = props;
- // const [imageListData, setImageListData] = useState([{ url: '', file: new File([], '')}]);
+  //const [imageListData, setImageListData] = useState([{ url: '', file: new File([], '')}]);
 
   const okHandle = () => {
     form.validateFields((err, fieldsValue) => {
@@ -33,7 +40,7 @@ const CreateForm: React.FC<CreateFormProps> = props => {
       form.resetFields();
       handleAdd(fieldsValue);
     });
-    // let newData = '';
+        // let newData = '';
     // const { dispatch } = props;
     // imageListData.map((item, index) => {
     //   dispatch({
@@ -59,32 +66,47 @@ const CreateForm: React.FC<CreateFormProps> = props => {
   return (
     <Modal
       destroyOnClose
-      title="新建用户"
+      title="新建订单"
       visible={modalVisible}
       onOk={okHandle}
       onCancel={() => {
         onCancel();
-//        setImageListData([{ url: '', file: new File([], '')}]);
+        //setImageListData([{ url: '', file: new File([], '')}]);
       }}
       width={600}
     >
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="用户名">
-        {form.getFieldDecorator('userName', {
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="订单编号">
+        {form.getFieldDecorator('code', {
           rules: [{ required: true, message: '请输入至少五个字符的规则描述！' }],
         })(<Input placeholder="请输入" />)}
       </FormItem>
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="密码">
-        {form.getFieldDecorator('password', {
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="时间">
+        {form.getFieldDecorator('date', {
           rules: [{ required: true, message: '请输入至少五个字符的规则描述！' }],
         })(<Input placeholder="请输入" />)}
       </FormItem>
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="姓名">
-        {form.getFieldDecorator('name', {
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="商品编号">
+        {form.getFieldDecorator('details', {
           rules: [{ required: true, message: '请输入至少五个字符的规则描述！' }],
         })(<Input placeholder="请输入" />)}
       </FormItem>
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="手机号">
-        {form.getFieldDecorator('mobile', {
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="原价">
+        {form.getFieldDecorator('amount', {
+          rules: [{ required: true, message: '请输入至少五个字符的规则描述！' }],
+        })(<Input placeholder="请输入" />)}
+      </FormItem>
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="折扣">
+        {form.getFieldDecorator('discountAmount', {
+          rules: [{ required: true, message: '请输入至少五个字符的规则描述！' }],
+        })(<Input placeholder="请输入" />)}
+      </FormItem>
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="总价">
+        {form.getFieldDecorator('paidAmount', {
+          rules: [{ required: true, message: '请输入至少五个字符的规则描述！' }],
+        })(<Input placeholder="请输入" />)}
+      </FormItem>
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="收货手机">
+        {form.getFieldDecorator('receiver', {
           rules: [{ required: true, message: '请输入至少五个字符的规则描述！' }],
         })(<Input placeholder="请输入" />)}
       </FormItem>
@@ -93,8 +115,23 @@ const CreateForm: React.FC<CreateFormProps> = props => {
           rules: [{ required: true, message: '请输入至少五个字符的规则描述！' }],
         })(<Input placeholder="请输入" />)}
       </FormItem>
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="收货手机号">
-        {form.getFieldDecorator('receivingPhone', {
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="手机号">
+        {form.getFieldDecorator('mobile', {
+          rules: [{ required: true, message: '请输入至少五个字符的规则描述！' }],
+        })(<Input placeholder="请输入" />)}
+      </FormItem>
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="备注">
+        {form.getFieldDecorator('note', {
+          rules: [{ required: true, message: '请输入至少五个字符的规则描述！' }],
+        })(<Input placeholder="请输入" />)}
+      </FormItem>
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="用户编号">
+        {form.getFieldDecorator('userId', {
+          rules: [{ required: true, message: '请输入至少五个字符的规则描述！' }],
+        })(<Input placeholder="请输入" />)}
+      </FormItem>
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="状态">
+        {form.getFieldDecorator('status', {
           rules: [{ required: true, message: '请输入至少五个字符的规则描述！' }],
         })(<Input placeholder="请输入" />)}
       </FormItem>

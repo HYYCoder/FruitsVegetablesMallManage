@@ -78,7 +78,7 @@ const handleUpdate = async (
     detail: string;
   },
 ) => {
-  const hide = message.loading('正在更新');
+  const hide = message.loading('正在修改');
   try {
     await updateGoods({
       id: ids,
@@ -96,11 +96,11 @@ const handleUpdate = async (
     });
     hide();
 
-    message.success('更新成功');
+    message.success('修改成功');
     return true;
   } catch (error) {
     hide();
-    message.error('更新失败请重试！');
+    message.error('修改失败请重试！');
     return false;
   }
 };
