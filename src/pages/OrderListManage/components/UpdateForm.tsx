@@ -1,6 +1,6 @@
 import { Form, Icon } from '@ant-design/compatible';
 import '@ant-design/compatible/assets/index.css';
-import { Upload, Modal, Col, Row, Input } from 'antd';
+import { Upload, Modal, Col, Row, Input, Select } from 'antd';
 import React from 'react';
 import { FormComponentProps } from '@ant-design/compatible/es/form';
 import { formatMessage } from 'umi-plugin-react/locale';
@@ -10,6 +10,7 @@ import { TableListItem, imageItem } from '../data.d';
 import UploadImageList from '../../../components/UploadImage/UploadImageList';
 
 const FormItem = Form.Item;
+const { Option } = Select;
 
 export interface UpdateFormProps extends FormComponentProps {
   updateModalVisible: boolean;
@@ -175,7 +176,12 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
         {form.getFieldDecorator('status', {
           rules: [{ required: true, message: '请输入至少五个字符的规则描述！' }],
           initialValue: updateData?.status,
-        })(<Input placeholder="请输入" />)}
+        })(<Select showArrow={true} placeholder="请选择"> 
+            <Option value="AWAITING_PAYMENT">待支付</Option>
+            <Option value="AWAITING_DELIVERY">待收货</Option>
+            <Option value="COMPLETE">已完成</Option>
+            <Option value="CANCEL">取消</Option>
+            </Select>)}
       </FormItem>
       {/* <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="头像">
       {form.getFieldDecorator('imageUrl', {

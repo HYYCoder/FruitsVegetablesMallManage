@@ -181,6 +181,11 @@ const TableList: React.FC<TableListProps> = () => {
     {
       title: '状态',
       dataIndex: 'status',
+    render:(text)=>(<span>{text==="AWAITING_PAYMENT"?'待支付':
+      text==='AWAITING_DELIVERY'?'待收货':
+      text==="COMPLETE"?'已完成':
+      text==="CANCEL"?'取消':''}
+    </span>)
     },
     {
       title: '操作',
