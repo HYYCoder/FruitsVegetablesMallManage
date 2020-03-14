@@ -1,13 +1,14 @@
-import { Form, Icon } from '@ant-design/compatible';
+import { Form } from '@ant-design/compatible';
 import '@ant-design/compatible/assets/index.css';
-import { Upload, Modal, Col, Row, Input } from 'antd';
+import { Modal, Input } from 'antd';
+// import { PlusOutlined } from '@ant-design/icons';
 import React from 'react';
 import { FormComponentProps } from '@ant-design/compatible/es/form';
-import { formatMessage } from 'umi-plugin-react/locale';
+// import { formatMessage } from 'umi-plugin-react/locale';
 import { Dispatch, AnyAction } from 'redux';
 import { connect } from 'dva';
 import { TableListItem, imageItem } from '../data.d';
-import UploadImageList from '../../../components/UploadImage/UploadImageList';
+// import UploadImageList from '../../../components/UploadImage/UploadImageList';
 
 const FormItem = Form.Item;
 

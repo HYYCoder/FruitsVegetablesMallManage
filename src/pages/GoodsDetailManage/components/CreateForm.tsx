@@ -1,6 +1,7 @@
-import { Form, Icon } from '@ant-design/compatible';
+import { Form } from '@ant-design/compatible';
 import '@ant-design/compatible/assets/index.css';
 import { Input, Modal, Row, Col, Upload } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 import React, { useState } from 'react';
 import { FormComponentProps } from '@ant-design/compatible/es/form';
 import { formatMessage } from 'umi-plugin-react/locale';
@@ -177,9 +178,7 @@ const CreateForm: React.FC<CreateFormProps> = props => {
                       >
                         <Col span={24}>
                           <Row justify="center" style={{ marginTop: 10 }}>
-                            <Icon
-                              key="plusType"
-                              type="plus"
+                            <PlusOutlined
                               style={{ fontSize: 37, color: 'rgba(0, 0, 0, 0.45)' }}
                             />
                           </Row>
