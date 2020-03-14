@@ -53,6 +53,9 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
     let newData = '';
     const { dispatch } = props;
     imageListData.map((item, index) => {
+      if(item.url === ''){
+        return null;
+      }
       if (item.file.size !== 0) {
         dispatch({
           type: 'image/upload',
