@@ -15,7 +15,7 @@ export default (): React.ReactNode => (
   <PageHeaderWrapper>
     <Card>
       <Alert
-        message="umi ui 现已发布，点击右下角 umi 图标即可使用"
+        message="欢迎使用果蔬线上商店后台"
         type="success"
         showIcon
         banner
@@ -25,26 +25,11 @@ export default (): React.ReactNode => (
         }}
       />
       <Typography.Text strong>
-        <a target="_blank" rel="noopener noreferrer" href="https://pro.ant.design/docs/block">
-          基于 block 开发，快速构建标准页面
+        <a target="_blank" rel="noopener noreferrer" href="">
+          公告：服务器运行正常
         </a>
       </Typography.Text>
-      <CodePreview> npm run ui</CodePreview>
-      <Typography.Text
-        strong
-        style={{
-          marginBottom: 12,
-        }}
-      >
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://pro.ant.design/docs/available-script#npm-run-fetchblocks"
-        >
-          获取全部区块
-        </a>
-      </Typography.Text>
-      <CodePreview> npm run fetch:blocks</CodePreview>
+      <CodePreview> 管理员可以点击右边的菜单进行相关操作</CodePreview>
     </Card>
     <p
       style={{

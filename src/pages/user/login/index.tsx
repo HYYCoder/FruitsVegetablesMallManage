@@ -53,7 +53,7 @@ const Login: React.FC<LoginProps> = props => {
 
           <UserName
             name="userName"
-            placeholder="用户名: admin or user"
+            placeholder="用户名: "
             rules={[
               {
                 required: true,
@@ -63,7 +63,7 @@ const Login: React.FC<LoginProps> = props => {
           />
           <Password
             name="password"
-            placeholder="密码: ant.design"
+            placeholder="密码: "
             rules={[
               {
                 required: true,
@@ -108,13 +108,13 @@ const Login: React.FC<LoginProps> = props => {
           <Checkbox checked={autoLogin} onChange={e => setAutoLogin(e.target.checked)}>
             自动登录
           </Checkbox>
-          <a
+          {/* <a
             style={{
               float: 'right',
             }}
           >
             忘记密码
-          </a>
+          </a> */}
         </div>
         <Submit loading={submitting}>登录</Submit>
         <div className={styles.other}>
