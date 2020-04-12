@@ -1,6 +1,8 @@
+import { AlipayCircleOutlined, TaobaoCircleOutlined, WeiboCircleOutlined } from '@ant-design/icons';
 import { Alert } from 'antd';
 import React, { useState } from 'react';
 import { Dispatch, AnyAction } from 'redux';
+import { Link } from 'umi';
 import { connect } from 'dva';
 import { StateTypes } from '@/models/register';
 import styles from './style.less';
@@ -150,6 +152,15 @@ const Register: React.FC<RegisterProps> = props => {
           />
         </Tab>
         <Submit loading={submitting}>注册</Submit>
+        <div className={styles.other}>
+          其他注册方式
+          <AlipayCircleOutlined className={styles.icon} />
+          <TaobaoCircleOutlined className={styles.icon} />
+          <WeiboCircleOutlined className={styles.icon} />
+          <Link className={styles.register} to="/user/login">
+            已有账号？返回登录
+          </Link>
+        </div>
       </RegisterFrom>
     </div>
   );

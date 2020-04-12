@@ -49,7 +49,7 @@ const UserLayout: React.FC<UserLayoutProps> = props => {
         <div className={styles.content}>
           <div className={styles.top}>
             <div className={styles.header}>
-              <Link to="/">
+              <Link to="/user/login">
                 <img alt="logo" className={styles.logo} src={logo} />
                 <span className={styles.title}>Fruits Vegetables Mall</span>
               </Link>
