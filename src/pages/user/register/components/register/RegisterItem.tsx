@@ -4,20 +4,20 @@ import React, { useState, useCallback, useEffect } from 'react';
 import omit from 'omit.js';
 import { FormItemProps } from 'antd/es/form/FormItem';
 import ItemMap from './map';
-import LoginContext, { LoginContextProps } from './RegisterContext';
+import RegisterContext, { RegisterContextProps } from './RegisterContext';
 import styles from './index.less';
 import { getFakeCaptcha } from '@/services/login';
 
-export type WrappedLoginItemProps = LoginItemProps;
-export type LoginItemKeyType = keyof typeof ItemMap;
-export interface LoginItemType {
-  UserName: React.FC<WrappedLoginItemProps>;
-  Password: React.FC<WrappedLoginItemProps>;
-  Mobile: React.FC<WrappedLoginItemProps>;
-  Captcha: React.FC<WrappedLoginItemProps>;
+export type WrappedRegisterItemProps = RegisterItemProps;
+export type RegisterItemKeyType = keyof typeof ItemMap;
+export interface RegisterItemType {
+  UserName: React.FC<WrappedRegisterItemProps>;
+  Password: React.FC<WrappedRegisterItemProps>;
+  Mobile: React.FC<WrappedRegisterItemProps>;
+  Captcha: React.FC<WrappedRegisterItemProps>;
 }
 
-export interface LoginItemProps extends Partial<FormItemProps> {
+export interface RegisterItemProps extends Partial<FormItemProps> {
   name?: string;
   style?: React.CSSProperties;
   placeholder?: string;
@@ -25,12 +25,12 @@ export interface LoginItemProps extends Partial<FormItemProps> {
   countDown?: number;
   getCaptchaButtonText?: string;
   getCaptchaSecondText?: string;
-  updateActive?: LoginContextProps['updateActive'];
+  updateActive?: RegisterContextProps['updateActive'];
   type?: string;
   defaultValue?: string;
   customProps?: { [key: string]: unknown };
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  tabUtil?: LoginContextProps['tabUtil'];
+  tabUtil?: RegisterContextProps['tabUtil'];
 }
 
 const FormItem = Form.Item;
@@ -40,13 +40,13 @@ const getFormItemOptions = ({
   defaultValue,
   customProps = {},
   rules,
-}: LoginItemProps) => {
+}: RegisterItemProps) => {
   const options: {
-    rules?: LoginItemProps['rules'];
-    onChange?: LoginItemProps['onChange'];
-    initialValue?: LoginItemProps['defaultValue'];
+    rules?: RegisterItemProps['rules'];
+    onChange?: RegisterItemProps['onChange'];
+    initialValue?: RegisterItemProps['defaultValue'];
   } = {
-    rules: rules || (customProps.rules as LoginItemProps['rules']),
+    rules: rules || (customProps.rules as RegisterItemProps['rules']),
   };
   if (onChange) {
     options.onChange = onChange;
@@ -57,7 +57,7 @@ const getFormItemOptions = ({
   return options;
 };
 
-const LoginItem: React.FC<LoginItemProps> = props => {
+const RegisterItem: React.FC<RegisterItemProps> = props => {
   const [count, setCount] = useState<number>(props.countDown || 0);
   const [timing, setTiming] = useState(false);
   // 这么写是为了防止restProps中 带入 onChange, defaultValue, rules props tabUtil
@@ -146,14 +146,14 @@ const LoginItem: React.FC<LoginItemProps> = props => {
   );
 };
 
-const LoginItems: Partial<LoginItemType> = {};
+const RegisterItems: Partial<RegisterItemType> = {};
 
 Object.keys(ItemMap).forEach(key => {
   const item = ItemMap[key];
-  LoginItems[key] = (props: LoginItemProps) => (
-    <LoginContext.Consumer>
+  RegisterItems[key] = (props: RegisterItemProps) => (
+    <RegisterContext.Consumer>
       {context => (
-        <LoginItem
+        <RegisterItem
           customProps={item.props}
           rules={item.rules}
           {...props}
@@ -162,8 +162,8 @@ Object.keys(ItemMap).forEach(key => {
           updateActive={context.updateActive}
         />
       )}
-    </LoginContext.Consumer>
+    </RegisterContext.Consumer>
   );
 });
 
-export default LoginItems as LoginItemType;
+export default RegisterItems as RegisterItemType;

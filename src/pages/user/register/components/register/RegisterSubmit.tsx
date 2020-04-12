@@ -7,11 +7,11 @@ import styles from './index.less';
 
 const FormItem = Form.Item;
 
-interface LoginSubmitProps extends ButtonProps {
+interface RegisterSubmitProps extends ButtonProps {
   className?: string;
 }
 
-const LoginSubmit: React.FC<LoginSubmitProps> = ({ className, ...rest }) => {
+const RegisterSubmit: React.FC<RegisterSubmitProps> = ({ className, ...rest }) => {
   const clsString = classNames(styles.submit, className);
   return (
     <FormItem>
@@ -20,4 +20,4 @@ const LoginSubmit: React.FC<LoginSubmitProps> = ({ className, ...rest }) => {
   );
 };
 
-export default LoginSubmit;
+export default RegisterSubmit;

@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 
-export interface LoginContextProps {
+export interface RegisterContextProps {
   tabUtil?: {
     addTab: (id: string) => void;
     removeTab: (id: string) => void;
@@ -8,6 +8,6 @@ export interface LoginContextProps {
   updateActive?: (activeItem: { [key: string]: string } | string) => void;
 }
 
-const LoginContext: React.Context<LoginContextProps> = createContext({});
+const RegisterContext: React.Context<RegisterContextProps> = createContext({});
 
-export default LoginContext;
+export default RegisterContext;

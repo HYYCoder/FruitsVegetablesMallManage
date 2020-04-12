@@ -1,23 +1,21 @@
-import { AlipayCircleOutlined, TaobaoCircleOutlined, WeiboCircleOutlined } from '@ant-design/icons';
-import { Alert, Checkbox } from 'antd';
+import { Alert } from 'antd';
 import React, { useState } from 'react';
 import { Dispatch, AnyAction } from 'redux';
-import { Link } from 'umi';
 import { connect } from 'dva';
-import { StateType } from '@/models/login';
+import { StateTypes } from '@/models/register';
 import styles from './style.less';
-import { LoginParamsType } from '@/services/login';
+import { RegisterParamsType } from '@/services/register';
 import { ConnectState } from '@/models/connect';
-import LoginFrom from './components/register';
+import RegisterFrom from './components/register';
 
-const { Tab, UserName, Password, Mobile, Captcha, Submit } = LoginFrom;
-interface LoginProps {
+const { Tab, UserName, Password, ImageUrl, Mobile, Name ,Captcha, Submit } = RegisterFrom;
+interface RegisterProps {
   dispatch: Dispatch<AnyAction>;
-  userLogin: StateType;
+  userRegister: StateTypes;
   submitting?: boolean;
 }
 
-const LoginMessage: React.FC<{
+const RegisterMessage: React.FC<{
   content: string;
 }> = ({ content }) => (
   <Alert
@@ -30,30 +28,29 @@ const LoginMessage: React.FC<{
   />
 );
 
-const Login: React.FC<LoginProps> = props => {
-  const { userLogin = {}, submitting } = props;
-  const { status, type: loginType } = userLogin;
-  const [autoLogin, setAutoLogin] = useState(true);
+const Register: React.FC<RegisterProps> = props => {
+  const { userRegister = {}, submitting } = props;
+  const { status, type: registerType } = userRegister;
   const [type, setType] = useState<string>('account');
 
-  const handleSubmit = (values: LoginParamsType) => {
+  const handleSubmit = (values: RegisterParamsType) => {
     const { dispatch } = props;
     dispatch({
-      type: 'login/login',
+      type: 'register/register',
       payload: { ...values },
     });
   };
   return (
     <div className={styles.main}>
-      <LoginFrom activeKey={type} onTabChange={setType} onSubmit={handleSubmit}>
+      <RegisterFrom activeKey={type} onTabChange={setType} onSubmit={handleSubmit}>
         <Tab key="account" tab="账户密码注册">
-          {status === 'error' && loginType === 'account' && !submitting && (
-            <LoginMessage content="账户或密码错误（admin/ant.design）" />
+          {status === 'error' && registerType === 'account' && !submitting && (
+            <RegisterMessage content="账户或密码错误（admin/ant.design）" />
           )}
 
           <UserName
             name="userName"
-            placeholder="用户名: admin or user"
+            placeholder="用户名"
             rules={[
               {
                 required: true,
@@ -63,7 +60,7 @@ const Login: React.FC<LoginProps> = props => {
           />
           <Password
             name="password"
-            placeholder="密码: ant.design"
+            placeholder="密码"
             rules={[
               {
                 required: true,
@@ -71,11 +68,59 @@ const Login: React.FC<LoginProps> = props => {
               },
             ]}
           />
+          <ImageUrl
+            name="imageUrl"
+            placeholder="头像"
+          />
+          <Mobile
+            name="mobile"
+            placeholder="手机号"
+            rules={[
+              {
+                required: true,
+                message: '请输入手机号！',
+              },
+            ]}
+          />
+          <Name
+            name="name"
+            placeholder="姓名"
+            rules={[
+              {
+                required: true,
+                message: '请输入姓名！',
+              },
+            ]}
+          />
         </Tab>
         <Tab key="mobile" tab="手机号注册">
-          {status === 'error' && loginType === 'mobile' && !submitting && (
-            <LoginMessage content="验证码错误" />
+          {status === 'error' && registerType === 'mobile' && !submitting && (
+            <RegisterMessage content="验证码错误" />
           )}
+          <ImageUrl
+            name="imageUrl"
+            placeholder="头像"
+          />
+          <Name
+            name="name"
+            placeholder="姓名"
+            rules={[
+              {
+                required: true,
+                message: '请输入姓名！',
+              },
+            ]}
+          />
+          <Password
+            name="password"
+            placeholder="密码"
+            rules={[
+              {
+                required: true,
+                message: '请输入密码！',
+              },
+            ]}
+          />
           <Mobile
             name="mobile"
             placeholder="手机号"
@@ -105,12 +150,12 @@ const Login: React.FC<LoginProps> = props => {
           />
         </Tab>
         <Submit loading={submitting}>注册</Submit>
-      </LoginFrom>
+      </RegisterFrom>
     </div>
   );
 };
 
-export default connect(({ login, loading }: ConnectState) => ({
-  userLogin: login,
-  submitting: loading.effects['login/login'],
-}))(Login);
+export default connect(({ register, loading }: ConnectState) => ({
+  userRegister: register,
+  submitting: loading.effects['register/register'],
+}))(Register);

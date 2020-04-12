@@ -1,16 +1,22 @@
 import request from '@/utils/request';
 
-export interface LoginParamsType {
+export interface RegisterParamsType {
   userName: string;
   password: string;
+  imageUrl: string;
+  mobile: string;
+  name: string;
 }
 
-export async function adminLogin(params: LoginParamsType) {
-  return request('/manage/admin/login', {
+export async function adminRegister(params: RegisterParamsType) {
+  return request('/manage/admin/register', {
     method: 'POST',
     data: {
       userName: params.userName,
       password: params.password,
+      imageUrl: params.imageUrl,
+      mobile: params.mobile,
+      name: params.name,
     },
   });
 }

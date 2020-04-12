@@ -1,4 +1,4 @@
-import { LockTwoTone, MailTwoTone, MobileTwoTone, UserOutlined } from '@ant-design/icons';
+import { LockTwoTone, MailTwoTone, MobileTwoTone, UserOutlined, PictureTwoTone, ScheduleTwoTone } from '@ant-design/icons';
 import React from 'react';
 import styles from './index.less';
 
@@ -39,6 +39,15 @@ export default {
       },
     ],
   },
+  ImageUrl: {
+    props: {
+      size: 'large',
+      prefix: <PictureTwoTone className={styles.prefixIcon} />,
+      placeholder: 'image',
+    },
+    rules: [
+    ],
+  },
   Mobile: {
     props: {
       size: 'large',
@@ -53,6 +62,19 @@ export default {
       {
         pattern: /^1\d{10}$/,
         message: 'Wrong mobile number format!',
+      },
+    ],
+  },
+  Name: {
+    props: {
+      size: 'large',
+      prefix: <ScheduleTwoTone className={styles.prefixIcon} />,
+      placeholder: 'name',
+    },
+    rules: [
+      {
+        required: true,
+        message: 'Please enter name!',
       },
     ],
   },

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { TabPaneProps } from 'antd/es/tabs';
 import { Tabs } from 'antd';
-import LoginContext, { LoginContextProps } from './RegisterContext';
+import RegisterContext, { RegisterContextProps } from './RegisterContext';
 
 const { TabPane } = Tabs;
 
@@ -13,13 +13,13 @@ const generateId = (() => {
   };
 })();
 
-interface LoginTabProps extends TabPaneProps {
-  tabUtil: LoginContextProps['tabUtil'];
+interface RegisterTabProps extends TabPaneProps {
+  tabUtil: RegisterContextProps['tabUtil'];
 }
 
-const LoginTab: React.FC<LoginTabProps> = props => {
+const RegisterTab: React.FC<RegisterTabProps> = props => {
   useEffect(() => {
-    const uniqueId = generateId('login-tab-');
+    const uniqueId = generateId('register-tab-');
     const { tabUtil } = props;
     if (tabUtil) {
       tabUtil.addTab(uniqueId);
@@ -33,12 +33,12 @@ const LoginTab: React.FC<LoginTabProps> = props => {
 const WrapContext: React.FC<TabPaneProps> & {
   typeName: string;
 } = props => (
-  <LoginContext.Consumer>
-    {value => <LoginTab tabUtil={value.tabUtil} {...props} />}
-  </LoginContext.Consumer>
+  <RegisterContext.Consumer>
+    {value => <RegisterTab tabUtil={value.tabUtil} {...props} />}
+  </RegisterContext.Consumer>
 );
 
 // 标志位 用来判断是不是自定义组件
-WrapContext.typeName = 'LoginTab';
+WrapContext.typeName = 'RegisterTab';
 
 export default WrapContext;

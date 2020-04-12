@@ -3,34 +3,37 @@ import React, { useState } from 'react';
 import useMergeValue from 'use-merge-value';
 import classNames from 'classnames';
 import { FormInstance } from 'antd/es/form';
-import LoginContext from './RegisterContext';
-import LoginItem, { LoginItemProps } from './RegisterItem';
+import RegisterContext from './RegisterContext';
+import RegisterItem, { RegisterItemProps } from './RegisterItem';
 
-import LoginSubmit from './RegisterSubmit';
-import LoginTab from './RegisterTab';
+import RegisterSubmit from './RegisterSubmit';
+import RegisterTab from './RegisterTab';
 import styles from './index.less';
-import { LoginParamsType } from '@/services/login';
+import { RegisterParamsType } from '@/services/register';
 
-export interface LoginProps {
+export interface RegisterProps {
   activeKey?: string;
   onTabChange?: (key: string) => void;
   style?: React.CSSProperties;
-  onSubmit?: (values: LoginParamsType) => void;
+  onSubmit?: (values: RegisterParamsType) => void;
   className?: string;
   from?: FormInstance;
-  children: React.ReactElement<typeof LoginTab>[];
+  children: React.ReactElement<typeof RegisterTab>[];
 }
 
-interface LoginType extends React.FC<LoginProps> {
-  Tab: typeof LoginTab;
-  Submit: typeof LoginSubmit;
-  UserName: React.FunctionComponent<LoginItemProps>;
-  Password: React.FunctionComponent<LoginItemProps>;
-  Mobile: React.FunctionComponent<LoginItemProps>;
-  Captcha: React.FunctionComponent<LoginItemProps>;
+interface RegisterType extends React.FC<RegisterProps> {
+  Tab: typeof RegisterTab;
+  Submit: typeof RegisterSubmit;
+  UserName: React.FunctionComponent<RegisterItemProps>;
+  Password: React.FunctionComponent<RegisterItemProps>;
+  ImageUrl: React.FunctionComponent<RegisterItemProps>;
+  Mobile: React.FunctionComponent<RegisterItemProps>;
+  Name: React.FunctionComponent<RegisterItemProps>;
+  Captcha: React.FunctionComponent<RegisterItemProps>;
+
 }
 
-const Login: LoginType = props => {
+const Register: RegisterType = props => {
   const { className } = props;
   const [tabs, setTabs] = useState<string[]>([]);
   const [active, setActive] = useState();
@@ -38,23 +41,23 @@ const Login: LoginType = props => {
     value: props.activeKey,
     onChange: props.onTabChange,
   });
-  const TabChildren: React.ReactComponentElement<typeof LoginTab>[] = [];
+  const TabChildren: React.ReactComponentElement<typeof RegisterTab>[] = [];
   const otherChildren: React.ReactElement<unknown>[] = [];
   React.Children.forEach(
     props.children,
-    (child: React.ReactComponentElement<typeof LoginTab> | React.ReactElement<unknown>) => {
+    (child: React.ReactComponentElement<typeof RegisterTab> | React.ReactElement<unknown>) => {
       if (!child) {
         return;
       }
-      if ((child.type as { typeName: string }).typeName === 'LoginTab') {
-        TabChildren.push(child as React.ReactComponentElement<typeof LoginTab>);
+      if ((child.type as { typeName: string }).typeName === 'RegisterTab') {
+        TabChildren.push(child as React.ReactComponentElement<typeof RegisterTab>);
       } else {
         otherChildren.push(child);
       }
     },
   );
   return (
-    <LoginContext.Provider
+    <RegisterContext.Provider
       value={{
         tabUtil: {
           addTab: id => {
@@ -79,7 +82,7 @@ const Login: LoginType = props => {
           form={props.from}
           onFinish={values => {
             if (props.onSubmit) {
-              props.onSubmit(values as LoginParamsType);
+              props.onSubmit(values as RegisterParamsType);
             }
           }}
         >
@@ -102,16 +105,18 @@ const Login: LoginType = props => {
           )}
         </Form>
       </div>
-    </LoginContext.Provider>
+    </RegisterContext.Provider>
   );
 };
 
-Login.Tab = LoginTab;
-Login.Submit = LoginSubmit;
+Register.Tab = RegisterTab;
+Register.Submit = RegisterSubmit;
 
-Login.UserName = LoginItem.UserName;
-Login.Password = LoginItem.Password;
-Login.Mobile = LoginItem.Mobile;
-Login.Captcha = LoginItem.Captcha;
+Register.UserName = RegisterItem.UserName;
+Register.Password = RegisterItem.Password;
+Register.ImageUrl = RegisterItem.ImageUrl;
+Register.Mobile = RegisterItem.Mobile;
+Register.Name = RegisterItem.Name;
+Register.Captcha = RegisterItem.Captcha;
 
-export default Login;
+export default Register;
