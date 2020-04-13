@@ -70,10 +70,10 @@ const Register: React.FC<RegisterProps> = props => {
               },
             ]}
           />
-          <ImageUrl
+          {/* <ImageUrl
             name="imageUrl"
             placeholder="头像"
-          />
+          /> */}
           <Mobile
             name="mobile"
             placeholder="手机号"
@@ -99,10 +99,10 @@ const Register: React.FC<RegisterProps> = props => {
           {status === 'error' && registerType === 'mobile' && !submitting && (
             <RegisterMessage content="验证码错误" />
           )}
-          <ImageUrl
+          {/* <ImageUrl
             name="imageUrl"
             placeholder="头像"
-          />
+          /> */}
           <Name
             name="name"
             placeholder="姓名"
