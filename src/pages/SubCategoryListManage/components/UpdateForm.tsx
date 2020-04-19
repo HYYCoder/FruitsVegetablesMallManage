@@ -1,14 +1,14 @@
 import { Form } from '@ant-design/compatible';
 import '@ant-design/compatible/assets/index.css';
-import { Upload, Modal, Col, Row, Input } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import { Modal, Input } from 'antd';
+// import { PlusOutlined } from '@ant-design/icons';
 import React from 'react';
 import { FormComponentProps } from '@ant-design/compatible/es/form';
-import { formatMessage } from 'umi-plugin-react/locale';
+// import { formatMessage } from 'umi-plugin-react/locale';
 import { Dispatch, AnyAction } from 'redux';
 import { connect } from 'dva';
-import { TableListItem, imageItem } from '../data.d';
-import UploadImageList from '../../../components/UploadImage/UploadImageList';
+import { TableListItem, imageItem } from '../data';
+// import UploadImageList from '../../../components/UploadImage/UploadImageList';
 
 const FormItem = Form.Item;
 
@@ -18,7 +18,7 @@ export interface UpdateFormProps extends FormComponentProps {
     id: number,
     fieldsValue: {
       orders: number;
-      imageUrl: string;
+      pid: number;
       name: string;
     },
   ) => void;
@@ -41,45 +41,51 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
   } = props;
 
   const okHandle = () => {
-    let newData = '';
-    const { dispatch } = props;
-    imageListData.map((item, index) => {
-      if(item.url === ''){
-        return null;
-      }
-      if (item.file.size !== 0) {
-        dispatch({
-          type: 'image/upload',
-          payload: item.file,
-          callback: (response: any) => {
-            newData += response;
-            if (index + 1 === imageListData.length) {
-              form.setFieldsValue({
-                imageUrl: newData,
-              });
-              form.validateFields((err, fieldsValue) => {
-                if (err) return;
-                form.resetFields();
-                handleUpdate(updateData.id, fieldsValue);
-              });
-            }
-          },
-        });
-      } else {
-        newData += item.url;
-      }
-      if (item.file.size === 0 && index + 1 === imageListData.length) {
-        form.setFieldsValue({
-          imageUrl: newData,
-        });
-        form.validateFields((err, fieldsValue) => {
-          if (err) return;
-          form.resetFields();
-          handleUpdate(updateData.id, fieldsValue);
-        });
-      }
-      return null;
+    form.setFieldsValue({
+      id: 0,
     });
+    form.validateFields((err, fieldsValue) => {
+      if (err) return;
+      form.resetFields();
+      handleUpdate(updateData.id, fieldsValue);
+    });
+    // let newData = '';
+    // const { dispatch } = props;
+    // imageListData.map((item, index) => {
+    //   if (item.file.size !== 0) {
+    //     dispatch({
+    //       type: 'image/upload',
+    //       payload: item.file,
+    //       callback: (response: any) => {
+    //         newData += response;
+    //         if (index + 1 === imageListData.length) {
+    //           form.setFieldsValue({
+    //             imageUrl: newData,
+    //             id: 0,
+    //           });
+    //           form.validateFields((err, fieldsValue) => {
+    //             if (err) return;
+    //             form.resetFields();
+    //             handleUpdate(updateData.userName, fieldsValue);
+    //           });
+    //         }
+    //       },
+    //     });
+    //   } else {
+    //     newData += item.url;
+    //   }
+    //   if (item.file.size === 0 && index + 1 === imageListData.length) {
+    //     form.setFieldsValue({
+    //       imageUrl: newData,
+    //     });
+    //     form.validateFields((err, fieldsValue) => {
+    //       if (err) return;
+    //       form.resetFields();
+    //       handleUpdate(updateData.userName, fieldsValue);
+    //     });
+    //   }
+    //   return null;
+    // });
   };
 
   return (
@@ -94,7 +100,25 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
     }}
     width={600}
     >
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="商品图">
+       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="一级分类编号">
+        {form.getFieldDecorator('pid', {
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
+          initialValue: updateData?.pid,
+        })(<Input placeholder="请输入" />)}
+      </FormItem>
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="排序">
+        {form.getFieldDecorator('orders', {
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
+          initialValue: updateData?.orders,
+        })(<Input placeholder="请输入" />)}
+      </FormItem>
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="名称">
+        {form.getFieldDecorator('name', {
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
+          initialValue: updateData?.name,
+        })(<Input placeholder="请输入" />)}
+      </FormItem>
+      {/* <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="头像">
       {form.getFieldDecorator('imageUrl', {
         rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
       })(
@@ -138,7 +162,9 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
               >
                 <Col span={24}>
                   <Row justify="center" style={{ marginTop: 10 }}>
-                    <PlusOutlined
+                    <Icon
+                      key="plusType"
+                      type="plus"
                       style={{ fontSize: 37, color: 'rgba(0, 0, 0, 0.45)' }}
                     />
                   </Row>
@@ -156,19 +182,7 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
           </Col>
         </Row>
         )}
-      </FormItem>
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="排序">
-        {form.getFieldDecorator('orders', {
-          rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
-          initialValue: updateData?.orders,
-        })(<Input placeholder="请输入" />)}
-      </FormItem>
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="名称">
-        {form.getFieldDecorator('name', {
-          rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
-          initialValue: updateData?.name,
-        })(<Input placeholder="请输入" />)}
-      </FormItem>
+      </FormItem> */}
     </Modal>
   );
 }

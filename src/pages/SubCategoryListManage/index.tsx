@@ -8,8 +8,8 @@ import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
 import CreateForm from './components/CreateForm';
 import UpdateForm from './components/UpdateForm';
-import { TableListItem } from './data.d';
-import { queryCategory, updateCategory, addCategory, removeCategory } from './service';
+import { TableListItem } from './data';
+import { querySubCategory, updateSubCategory, addSubCategory, removeSubCategory } from './service';
 import { Dispatch, AnyAction } from 'redux';
 
 interface TableListProps extends FormComponentProps {
@@ -22,14 +22,14 @@ interface TableListProps extends FormComponentProps {
  */
 const handleAdd = async (fields: {
   orders: number;
-  imageUrl: string;
+  pid: number;
   name: string;
 }) => {
   const hide = message.loading('正在添加');
   try {
-    await addCategory({
+    await addSubCategory({
       orders: fields.orders,
-      imageUrl: fields.imageUrl,
+      pid: fields.pid,
       name: fields.name,
     });
     hide();
@@ -50,15 +50,15 @@ const handleUpdate = async (
   id: number,
   fields: {
     orders: number;
-    imageUrl: string;
+    pid: number;
     name: string;
-  },) => {
+}) => {
   const hide = message.loading('正在修改');
   try {
-    await updateCategory({
+    await updateSubCategory({
       id: id,
       orders: fields.orders,
-      imageUrl: fields.imageUrl,
+      pid: fields.pid,
       name: fields.name,
     });
     hide();
@@ -80,7 +80,7 @@ const handleRemove = async (selectedRows: TableListItem[]) => {
   const hide = message.loading('正在删除');
   if (!selectedRows) return true;
   try {
-    await selectedRows.map(row => removeCategory(row.id));
+    await selectedRows.map(row => removeSubCategory(row.id));
     hide();
     message.success('删除成功，即将刷新');
     return true;
@@ -99,12 +99,12 @@ const TableList: React.FC<TableListProps> = () => {
   const actionRef = useRef<ActionType>();
   const columns: ProColumns<TableListItem>[] = [
     {
-      title: '优先级',
-      dataIndex: 'orders',
+      title: '一级分类编号',
+      dataIndex: 'pid',
     },
     {
-      title: '图片',
-      dataIndex: 'imageUrl',
+      title: '优先级',
+      dataIndex: 'orders',
     },
     {
       title: '名称',
@@ -112,7 +112,7 @@ const TableList: React.FC<TableListProps> = () => {
     },
     {
       title: '操作',
-      dataIndex: 'id',
+      dataIndex: 'option',
       valueType: 'option',
       render: (_, record) => (
         <>
@@ -120,7 +120,7 @@ const TableList: React.FC<TableListProps> = () => {
             onClick={() => {
               handleUpdateModalVisible(true);
               const newData = [{ url: '', file: new File([], '') }];
-              newData.push({ url: record.imageUrl, file: new File([], '') });
+              //newData.push({ url: record.imageUrl, file: new File([], '') });
               handleImageListData(newData);
               handleUpdateData(record);
             }}
@@ -130,9 +130,9 @@ const TableList: React.FC<TableListProps> = () => {
           <Divider type="vertical" />
           <a>
             <Popconfirm
-              title="是否确定要删除轮播图?"
+              title="是否确定要删除用户?"
               onConfirm={() => {
-                removeCategory(record.id);
+                removeSubCategory(record.id);
                 window.location.reload();
               }}
               okText="确认"
@@ -149,7 +149,7 @@ const TableList: React.FC<TableListProps> = () => {
   return (
     <PageHeaderWrapper>
       <ProTable<TableListItem>
-        headerTitle="轮播图列表"
+        headerTitle="用户列表"
         actionRef={actionRef}
         rowKey="id"
         toolBarRender={(action, { selectedRows }) => [
@@ -183,7 +183,7 @@ const TableList: React.FC<TableListProps> = () => {
             已选择 <a style={{ fontWeight: 600 }}>{selectedRowKeys.length}</a> 项&nbsp;&nbsp;
           </div>
         )}
-        request={params => queryCategory(params)}
+        request={params => querySubCategory(params)}
         columns={columns}
         rowSelection={{}}
       />

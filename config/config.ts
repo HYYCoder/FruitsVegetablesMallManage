@@ -151,7 +151,13 @@ export default {
               name: 'categorylist',
               icon: 'smile',
               path: '/categorylistmanage',
-              component: './categoryListManage',
+              component: './CategoryListManage',
+            },
+            {
+              name: 'subcategorylist',
+              icon: 'smile',
+              path: '/subCategorylistmanage',
+              component: './SubCategoryListManage',
             },
             {
               component: './404',
