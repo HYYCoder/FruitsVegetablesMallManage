@@ -53,4 +53,6 @@ export default {
   'menu.goodsdetail': '商品管理',
   'menu.bannerlist': '轮播图管理',
   'menu.orderlist': '订单管理',
+  'menu.categorylist': '一级分类管理',
+  'menu.subCategorylist': '二级分类管理',
 };

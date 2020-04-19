@@ -148,6 +148,12 @@ export default {
               component: './OrderListManage',
             },
             {
+              name: 'categorylist',
+              icon: 'smile',
+              path: '/categorylistmanage',
+              component: './categoryListManage',
+            },
+            {
               component: './404',
             },
           ],
