@@ -1,6 +1,6 @@
 import { Form } from '@ant-design/compatible';
 import '@ant-design/compatible/assets/index.css';
-import { Input, Modal, Col, Row, Upload } from 'antd';
+import { Input, Modal, Col, Row, Upload, Select } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import React, { useState } from 'react';
 import { FormComponentProps } from '@ant-design/compatible/es/form';
@@ -10,6 +10,7 @@ import { connect } from 'dva';
 import UploadImageList from '../../../components/UploadImage/UploadImageList';
 
 const FormItem = Form.Item;
+const { Option } = Select;
 
 interface CreateFormProps extends FormComponentProps {
   modalVisible: boolean;
@@ -143,7 +144,10 @@ const CreateForm: React.FC<CreateFormProps> = props => {
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="类型">
         {form.getFieldDecorator('type', {
           rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
-        })(<Input placeholder="请输入" />)}
+        })(<Select showArrow={true} placeholder="请选择"> 
+            <Option value="admin">管理员</Option>
+            <Option value="superadmin">超级管理员</Option>
+          </Select>)}
       </FormItem>
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="手机号">
         {form.getFieldDecorator('mobile', {

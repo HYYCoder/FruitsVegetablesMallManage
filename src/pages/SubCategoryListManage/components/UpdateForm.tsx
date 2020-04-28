@@ -1,6 +1,6 @@
 import { Form } from '@ant-design/compatible';
 import '@ant-design/compatible/assets/index.css';
-import { Modal, Input } from 'antd';
+import { Modal, Input, Select } from 'antd';
 // import { PlusOutlined } from '@ant-design/icons';
 import React from 'react';
 import { FormComponentProps } from '@ant-design/compatible/es/form';
@@ -11,6 +11,7 @@ import { TableListItem, imageItem } from '../data';
 // import UploadImageList from '../../../components/UploadImage/UploadImageList';
 
 const FormItem = Form.Item;
+const { Option } = Select;
 
 export interface UpdateFormProps extends FormComponentProps {
   updateModalVisible: boolean;
@@ -100,17 +101,35 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
     }}
     width={600}
     >
-       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="一级分类编号">
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="一级分类编号">
         {form.getFieldDecorator('pid', {
           rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
           initialValue: updateData?.pid,
-        })(<Input placeholder="请输入" />)}
+        })(<Select showArrow={true} placeholder="请选择"> 
+            <Option value="1">1</Option>
+            <Option value="2">2</Option>
+            <Option value="3">3</Option>
+            <Option value="4">4</Option>
+            <Option value="5">5</Option>
+            <Option value="6">6</Option>
+            <Option value="7">7</Option>
+            <Option value="8">8</Option>
+          </Select>)}
       </FormItem>
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="排序">
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="优先级">
         {form.getFieldDecorator('orders', {
           rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
           initialValue: updateData?.orders,
-        })(<Input placeholder="请输入" />)}
+        })(<Select showArrow={true} placeholder="请选择"> 
+            <Option value="1">1</Option>
+            <Option value="2">2</Option>
+            <Option value="3">3</Option>
+            <Option value="4">4</Option>
+            <Option value="5">5</Option>
+            <Option value="6">6</Option>
+            <Option value="7">7</Option>
+            <Option value="8">8</Option>
+          </Select>)}
       </FormItem>
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="名称">
         {form.getFieldDecorator('name', {

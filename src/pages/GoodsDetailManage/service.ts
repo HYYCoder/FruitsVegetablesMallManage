@@ -7,9 +7,8 @@ export async function queryGoods(params: TableListParams) {
       params.name !== undefined ? params.name : ''
     }&price=${params.price !== undefined ? params.price : ''}&stock=${
       params.stock !== undefined ? params.stock : ''
-    }&reducedPrice=${params.reducedPrice !== undefined ? params.reducedPrice : ''}&current=${
-      params.current
-    }&pageSize=${params.pageSize}`,
+    }&reducedPrice=${params.reducedPrice !== undefined ? params.reducedPrice : ''}
+    &hotGoods=${params.hotGoods !== undefined ? params.hotGoods : ''}&current=${params.current}&pageSize=${params.pageSize}`,
     {
       method: 'GET',
       headers: {
@@ -46,6 +45,7 @@ export async function addGoods(params: ChangeItem) {
       maximumOrderQuantity: params.maximumOrderQuantity,
       minimumIncrementQuantity: params.minimumIncrementQuantity,
       detail: params.detail,
+      hotGoods: params.hotGoods,
     },
   });
 }
@@ -69,6 +69,7 @@ export async function updateGoods(params: TableListItem) {
       maximumOrderQuantity: params.maximumOrderQuantity,
       minimumIncrementQuantity: params.minimumIncrementQuantity,
       detail: params.detail,
+      hotGoods: params.hotGoods,
     },
   });
 }

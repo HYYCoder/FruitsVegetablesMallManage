@@ -79,62 +79,62 @@ const CreateForm: React.FC<CreateFormProps> = props => {
     >
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="订单编号">
         {form.getFieldDecorator('code', {
-          rules: [{ required: true, message: '请输入至少五个字符的规则描述！' }],
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
         })(<Input placeholder="请输入" />)}
       </FormItem>
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="时间">
         {form.getFieldDecorator('date', {
-          rules: [{ required: true, message: '请输入至少五个字符的规则描述！' }],
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
         })(<Input placeholder="请输入" />)}
       </FormItem>
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="商品编号">
         {form.getFieldDecorator('details', {
-          rules: [{ required: true, message: '请输入至少五个字符的规则描述！' }],
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
         })(<Input placeholder="请输入" />)}
       </FormItem>
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="原价">
         {form.getFieldDecorator('amount', {
-          rules: [{ required: true, message: '请输入至少五个字符的规则描述！' }],
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
         })(<Input placeholder="请输入" />)}
       </FormItem>
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="折扣">
         {form.getFieldDecorator('discountAmount', {
-          rules: [{ required: true, message: '请输入至少五个字符的规则描述！' }],
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
         })(<Input placeholder="请输入" />)}
       </FormItem>
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="总价">
         {form.getFieldDecorator('paidAmount', {
-          rules: [{ required: true, message: '请输入至少五个字符的规则描述！' }],
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
         })(<Input placeholder="请输入" />)}
       </FormItem>
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="收货手机">
         {form.getFieldDecorator('receiver', {
-          rules: [{ required: true, message: '请输入至少五个字符的规则描述！' }],
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
         })(<Input placeholder="请输入" />)}
       </FormItem>
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="地址">
         {form.getFieldDecorator('address', {
-          rules: [{ required: true, message: '请输入至少五个字符的规则描述！' }],
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
         })(<Input placeholder="请输入" />)}
       </FormItem>
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="手机号">
         {form.getFieldDecorator('mobile', {
-          rules: [{ required: true, message: '请输入至少五个字符的规则描述！' }],
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
         })(<Input placeholder="请输入" />)}
       </FormItem>
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="备注">
         {form.getFieldDecorator('note', {
-          rules: [{ required: true, message: '请输入至少五个字符的规则描述！' }],
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
         })(<Input placeholder="请输入" />)}
       </FormItem>
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="用户编号">
         {form.getFieldDecorator('userId', {
-          rules: [{ required: true, message: '请输入至少五个字符的规则描述！' }],
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
         })(<Input placeholder="请输入" />)}
       </FormItem>
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="状态">
         {form.getFieldDecorator('status', {
-          rules: [{ required: true, message: '请输入至少五个字符的规则描述！' }],
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
         })(<Select showArrow={true} placeholder="请选择"> 
             <Option value="AWAITING_PAYMENT">待支付</Option>
             <Option value="AWAITING_DELIVERY">待收货</Option>

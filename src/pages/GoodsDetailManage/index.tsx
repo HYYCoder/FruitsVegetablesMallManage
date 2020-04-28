@@ -32,6 +32,7 @@ const handleAdd = async (fields: {
 	maximumOrderQuantity: number;
 	minimumIncrementQuantity: number;
   detail: string;
+  hotGoods: string;
 }) => {
   const hide = message.loading('正在添加');
   try {
@@ -47,6 +48,7 @@ const handleAdd = async (fields: {
       maximumOrderQuantity: fields.maximumOrderQuantity,
       minimumIncrementQuantity: fields.minimumIncrementQuantity,
       detail: fields.detail,
+      hotGoods: fields.hotGoods,
     });
     hide();
     message.success('添加成功');
@@ -76,6 +78,7 @@ const handleUpdate = async (
     maximumOrderQuantity: number;
     minimumIncrementQuantity: number;
     detail: string;
+    hotGoods: string;
   },
 ) => {
   const hide = message.loading('正在修改');
@@ -93,6 +96,7 @@ const handleUpdate = async (
       maximumOrderQuantity: fields.maximumOrderQuantity,
       minimumIncrementQuantity: fields.minimumIncrementQuantity,
       detail: fields.detail,
+      hotGoods: fields.hotGoods,
     });
     hide();
 
@@ -132,7 +136,7 @@ const TableList: React.FC<TableListProps> = () => {
   const actionRef = useRef<ActionType>();
   const columns: ProColumns<TableListItem>[] = [
     {
-      title: '商品类型',
+      title: '一级分类编号',
       dataIndex: 'categoryId',
     },
     {
@@ -172,6 +176,10 @@ const TableList: React.FC<TableListProps> = () => {
     {
       title: '下单增量',
       dataIndex: 'minimumIncrementQuantity',
+    },
+    {
+      title: '是否推荐',
+      dataIndex: 'hotGoods',
     },
     {
       title: '操作',

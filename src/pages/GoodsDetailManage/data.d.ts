@@ -11,6 +11,7 @@ export interface TableListItem {
 	maximumOrderQuantity: number;
 	minimumIncrementQuantity: number;
   detail: string;
+  hotGoods: string;
 }
 
 export interface imageItem {
@@ -30,6 +31,7 @@ export interface ChangeItem {
 	maximumOrderQuantity: number;
 	minimumIncrementQuantity: number;
   detail: string;
+  hotGoods: string;
 }
 
 export interface TableListParams {
@@ -38,6 +40,7 @@ export interface TableListParams {
   price: number;
   stock: number;
   reducedPrice: number;
+  hotGoods: string;
   id: number;
   pageSize?: number;
   current?: number;

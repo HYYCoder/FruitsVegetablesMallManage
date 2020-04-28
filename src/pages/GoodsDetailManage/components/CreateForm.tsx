@@ -1,6 +1,6 @@
 import { Form } from '@ant-design/compatible';
 import '@ant-design/compatible/assets/index.css';
-import { Input, Modal, Row, Col, Upload } from 'antd';
+import { Input, Modal, Row, Col, Upload, Select } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import React, { useState } from 'react';
 import { FormComponentProps } from '@ant-design/compatible/es/form';
@@ -11,6 +11,7 @@ import UploadImageList from '../../../components/UploadImage/UploadImageList';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 const FormItem = Form.Item;
+const { Option } = Select;
 
 interface CreateFormProps extends FormComponentProps {
   modalVisible: boolean;
@@ -26,6 +27,7 @@ interface CreateFormProps extends FormComponentProps {
     maximumOrderQuantity: number;
     minimumIncrementQuantity: number;
     detail: string;
+    hotGoods: string;
   }) => void;
   onCancel: () => void;
   dispatch: Dispatch<AnyAction>;
@@ -200,10 +202,19 @@ const CreateForm: React.FC<CreateFormProps> = props => {
           </DragDropContext>,
         )}
       </FormItem>
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="商品类型">
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="一级分类编号">
         {form.getFieldDecorator('categoryId', {
-          rules: [{ required: true, message: '请输入至少1个字符的规则描述！', min: 1 }],
-        })(<Input placeholder="请输入" />)}
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
+        })(<Select showArrow={true} placeholder="请选择"> 
+            <Option value="1">1</Option>
+            <Option value="2">2</Option>
+            <Option value="3">3</Option>
+            <Option value="4">4</Option>
+            <Option value="5">5</Option>
+            <Option value="6">6</Option>
+            <Option value="7">7</Option>
+            <Option value="8">8</Option>
+          </Select>)}
       </FormItem>
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="商品名">
         {form.getFieldDecorator('name', {
@@ -249,6 +260,14 @@ const CreateForm: React.FC<CreateFormProps> = props => {
         {form.getFieldDecorator('detail', {
           rules: [{ required: true, message: '请输入至少1个字符的规则描述！', min: 1 }],
         })(<Input placeholder="请输入" />)}
+      </FormItem>
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="推荐商品">
+        {form.getFieldDecorator('hotGoods', {
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
+        })(<Select showArrow={true} placeholder="请选择"> 
+            <Option value="YES">是</Option>
+            <Option value="NO">否</Option>
+          </Select>)}
       </FormItem>
     </Modal>
   );
