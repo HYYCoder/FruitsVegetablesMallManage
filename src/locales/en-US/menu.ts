@@ -48,4 +48,11 @@ export default {
   'menu.editor.flow': 'Flow Editor',
   'menu.editor.mind': 'Mind Editor',
   'menu.editor.koni': 'Koni Editor',
+  'menu.userlist': 'User List',
+  'menu.adminlist': 'Admin List',
+  'menu.goodsdetail': 'Goods Detail',
+  'menu.bannerlist': 'Banner List',
+  'menu.orderlist': 'Order List',
+  'menu.categorylist': 'Category List',
+  'menu.subcategorylist': 'Subcategory List',
 };

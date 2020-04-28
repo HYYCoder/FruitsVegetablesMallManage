@@ -49,4 +49,11 @@ export default {
   'menu.editor.flow': '流程編輯器',
   'menu.editor.mind': '腦圖編輯器',
   'menu.editor.koni': '拓撲編輯器',
+  'menu.userlist': '用戶管理',
+  'menu.adminlist': '管理員管理',
+  'menu.goodsdetail': '商品管理',
+  'menu.bannerlist': '輪播圖管理',
+  'menu.orderlist': '訂單管理',
+  'menu.categorylist': '一級分類管理',
+  'menu.subcategorylist': '二級分類管理',
 };
