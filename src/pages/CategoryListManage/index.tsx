@@ -130,7 +130,7 @@ const TableList: React.FC<TableListProps> = () => {
           <Divider type="vertical" />
           <a>
             <Popconfirm
-              title="是否确定要删除轮播图?"
+              title="是否确定要删除?"
               onConfirm={() => {
                 removeCategory(record.id);
                 window.location.reload();
@@ -149,7 +149,7 @@ const TableList: React.FC<TableListProps> = () => {
   return (
     <PageHeaderWrapper>
       <ProTable<TableListItem>
-        headerTitle="轮播图列表"
+        headerTitle="列表"
         actionRef={actionRef}
         rowKey="id"
         toolBarRender={(action, { selectedRows }) => [

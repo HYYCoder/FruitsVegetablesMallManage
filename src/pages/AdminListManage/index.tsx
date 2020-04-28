@@ -146,7 +146,7 @@ const TableList: React.FC<TableListProps> = () => {
           <Divider type="vertical" />
           <a>
             <Popconfirm
-              title="是否确定要删除管理员?"
+              title="是否确定要删除?"
               onConfirm={() => {
                 removeAdmin(record.id);
                 window.location.reload();
@@ -165,7 +165,7 @@ const TableList: React.FC<TableListProps> = () => {
   return (
     <PageHeaderWrapper>
       <ProTable<TableListItem>
-        headerTitle="管理员列表"
+        headerTitle="列表"
         actionRef={actionRef}
         rowKey="id"
         toolBarRender={(action, { selectedRows }) => [

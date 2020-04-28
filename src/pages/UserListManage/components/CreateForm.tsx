@@ -60,7 +60,7 @@ const CreateForm: React.FC<CreateFormProps> = props => {
   return (
     <Modal
       destroyOnClose
-      title="新建用户"
+      title="新建"
       visible={modalVisible}
       onOk={okHandle}
       onCancel={() => {
@@ -71,32 +71,32 @@ const CreateForm: React.FC<CreateFormProps> = props => {
     >
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="用户名">
         {form.getFieldDecorator('userName', {
-          rules: [{ required: true, message: '请输入至少五个字符的规则描述！' }],
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
         })(<Input placeholder="请输入" />)}
       </FormItem>
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="密码">
         {form.getFieldDecorator('password', {
-          rules: [{ required: true, message: '请输入至少五个字符的规则描述！' }],
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
         })(<Input placeholder="请输入" />)}
       </FormItem>
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="姓名">
         {form.getFieldDecorator('name', {
-          rules: [{ required: true, message: '请输入至少五个字符的规则描述！' }],
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
         })(<Input placeholder="请输入" />)}
       </FormItem>
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="手机号">
         {form.getFieldDecorator('mobile', {
-          rules: [{ required: true, message: '请输入至少五个字符的规则描述！' }],
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
         })(<Input placeholder="请输入" />)}
       </FormItem>
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="地址">
         {form.getFieldDecorator('address', {
-          rules: [{ required: true, message: '请输入至少五个字符的规则描述！' }],
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
         })(<Input placeholder="请输入" />)}
       </FormItem>
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="收货手机号">
         {form.getFieldDecorator('receivingPhone', {
-          rules: [{ required: true, message: '请输入至少五个字符的规则描述！' }],
+          rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
         })(<Input placeholder="请输入" />)}
       </FormItem>
       {/* <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="轮播图">

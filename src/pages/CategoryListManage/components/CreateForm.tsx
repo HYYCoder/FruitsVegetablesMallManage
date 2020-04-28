@@ -54,7 +54,7 @@ const CreateForm: React.FC<CreateFormProps> = props => {
   return (
     <Modal
       destroyOnClose
-      title="新建轮播图"
+      title="新建"
       visible={modalVisible}
       onOk={okHandle}
       onCancel={() => {

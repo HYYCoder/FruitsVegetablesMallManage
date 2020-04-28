@@ -129,7 +129,7 @@ const UpdateForm: React.FC<UpdateFormProps> = props => {
   return (
     <Modal
       destroyOnClose
-      title="修改商品"
+      title="修改"
       visible={updateModalVisible}
       onOk={okHandle}
       onCancel={() => {

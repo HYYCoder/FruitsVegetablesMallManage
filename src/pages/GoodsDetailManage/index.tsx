@@ -206,7 +206,7 @@ const TableList: React.FC<TableListProps> = () => {
           <Divider type="vertical" />
           <a>
             <Popconfirm
-              title="是否确定要删除商品?"
+              title="是否确定要删除?"
               onConfirm={() => {
                 removeGoods(record.id);
                 window.location.reload();
@@ -225,7 +225,7 @@ const TableList: React.FC<TableListProps> = () => {
   return (
     <PageHeaderWrapper>
       <ProTable<TableListItem>
-        headerTitle="商品列表"
+        headerTitle="列表"
         actionRef={actionRef}
         rowKey="id"
         toolBarRender={(action, { selectedRows }) => [
