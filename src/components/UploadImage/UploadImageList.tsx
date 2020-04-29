@@ -35,12 +35,14 @@ function UploadImageList(props: any) {
           src={props.item.url}
           onMouseEnter={() => setShowEditBtn(true)}
           alt=""
+          onError={(e) => {e.target.onerror = null;e.target.src="http://localhost:8080/images/default_iamge.png"}}
         />:
         <img
           style={{ width: 158, height: 143, objectFit: 'cover' }}
           src={imageURL+props.item.url}
           onMouseEnter={() => setShowEditBtn(true)}
           alt=""
+          onError={(e) => {e.target.onerror = null;e.target.src="http://localhost:8080/images/default_iamge.png"}}
         />
       }
       {showEditBtn ? (
