@@ -99,6 +99,10 @@ const TableList: React.FC<TableListProps> = () => {
   const actionRef = useRef<ActionType>();
   const columns: ProColumns<TableListItem>[] = [
     {
+      title: '一级分类编号',
+      dataIndex: 'id',
+    },
+    {
       title: '优先级',
       dataIndex: 'orders',
     },

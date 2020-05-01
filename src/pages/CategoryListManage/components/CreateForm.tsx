@@ -127,7 +127,7 @@ const CreateForm: React.FC<CreateFormProps> = props => {
           </Col>
         </Row>)}
       </FormItem>
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="排序">
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="优先级">
         {form.getFieldDecorator('orders', {
           rules: [{ required: true, message: '请输入至少1个字符的规则描述！' }],
         })(<Input placeholder="请输入" />)}
